@@ -30,13 +30,7 @@ void MyTestClientHandler::handlerClient(int clientId) {
         }
 
         if(this->cm->isProblemExist(buffer)){
-            string solution = this->cm->getSolution(buffer);
-            n = write(clientId, solution.c_str(), 1000);
-
-            if (n < 0) {
-                perror("ERROR writing to socket");
-                exit(1);
-            }
+            this->writeTheSolution(clientId,buffer);
         }else{
             this->cm->saveSolution(buffer,sou);
 
@@ -49,5 +43,11 @@ void MyTestClientHandler::handlerClient(int clientId) {
 }
 
 void MyTestClientHandler::writeTheSolution(int id, char *buffer) {
+    string solution = this->cm->getSolution(buffer);
+    ssize_t n = write(id, solution.c_str(), 1000);
 
+    if (n < 0) {
+        perror("ERROR writing to socket");
+        exit(1);
+    }
 }
