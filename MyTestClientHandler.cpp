@@ -19,6 +19,7 @@ void MyTestClientHandler::handlerClient(int clientId) {
         bzero(buffer, 1000);
         n = read(clientId, buffer, 1000);
 
+        cout<<buffer<<endl;
         //finish the conversetion.
         if(strcmp(buffer,"end") == 0){
             return;
@@ -28,13 +29,15 @@ void MyTestClientHandler::handlerClient(int clientId) {
             perror("ERROR reading from socket");
             exit(1);
         }
+/*
 
         if(this->cm->isProblemExist(buffer)){
             this->writeTheSolution(clientId,buffer);
         }else{
-            this->cm->saveSolution(buffer,sou);
+          //  this->cm->saveSolution(buffer,sou);
 
         }
+*/
 
 
     }

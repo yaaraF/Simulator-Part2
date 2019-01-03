@@ -37,7 +37,8 @@ void MySerialServer::open(int port, ClientHandler *cH) {
         exit(1);
     }
 
-    thread thread1(listenToClient, this->sockfd,cH);
+    listenToClient(this->sockfd,cH);
+    //thread thread1(listenToClient, this->sockfd,cH);
 
 }
 
