@@ -8,6 +8,7 @@
 
 class Test {
 void testSerial();
+void testReverse();
 public:
     void testAll();
 };
