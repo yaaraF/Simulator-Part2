@@ -15,6 +15,7 @@ class MyTestClientHandler : public ClientHandler {
     CacheManager<string,string> *cm;
 public:
     void handlerClient(int clientId);
+    void writeTheSolution(int id,char* buffer);
 
 };
 

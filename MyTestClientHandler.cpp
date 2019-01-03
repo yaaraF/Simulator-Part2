@@ -4,28 +4,50 @@
 
 #include <unistd.h>
 #include <strings.h>
+#include <cstring>
 #include "MyTestClientHandler.h"
 
 void MyTestClientHandler::handlerClient(int clientId) {
-    int clilen, cliSock, n;
-    char buffer[256];
-    // If connection is established then start communicating
-    bzero(buffer, 256);
-    n = read(cliSock, buffer, 255);
+    int clilen;
+    ssize_t n;
+    bool keepReading = true;
 
-    if (n < 0) {
-        perror("ERROR reading from socket");
-        exit(1);
+
+    while(keepReading) {
+        char buffer[1000];
+        // If connection is established then start communicating
+        bzero(buffer, 1000);
+        n = read(clientId, buffer, 1000);
+
+        //finish the conversetion.
+        if(strcmp(buffer,"end") == 0){
+            return;
+        }
+
+        if (n < 0) {
+            perror("ERROR reading from socket");
+            exit(1);
+        }
+
+        if(this->cm->isProblemExist(buffer)){
+            string solution = this->cm->getSolution(buffer);
+            n = write(clientId, solution.c_str(), 1000);
+
+            if (n < 0) {
+                perror("ERROR writing to socket");
+                exit(1);
+            }
+        }else{
+            this->cm->saveSolution(buffer,sou);
+
+        }
+
+
     }
 
-    printf("Here is the message: %s\n", buffer);
 
-    // Write a response to the client
-    n = write(cliSock, "I got your message", 18);
+}
 
-    if (n < 0) {
-        perror("ERROR writing to socket");
-        exit(1);
-    }
+void MyTestClientHandler::writeTheSolution(int id, char *buffer) {
 
 }
