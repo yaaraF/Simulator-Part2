@@ -2,17 +2,24 @@
 // Created by yaara on 1/3/19.
 //
 
-#include <vector>
 #include "FileCacheManager.h"
 
 using namespace std;
 
 template<class P, class S>
 FileCacheManager<P, S>::FileCacheManager() {
-    fstream table(FILE_NAME);
+  openF();
+}
+
+template<class P, class S>
+void FileCacheManager<P, S>::openF() {
+    ifstream table;
+    table.open("solutionTable.txt");
     if (table.good()) {
-        loadFileTable(table);
-        table.close();
+//        loadFileTable(table);
+//        table.close();
+    }
+    else{
     }
 }
 
@@ -40,15 +47,23 @@ void FileCacheManager<P, S>::saveSolution(S solution, P problem) {
 }
 
 template<class P, class S>
-void FileCacheManager<P, S>::loadFileTable(fstream file) {
-    string line;
+void FileCacheManager<P, S>::loadFileTable(ifstream file) {
+  /*  string line;
     while (getline(file, line)) {
         size_t pos = line.find("$");
         string problem = line.substr(0, pos);
         string solution = line.substr(pos + 1, line.length() - 1);
         this->solutions.insert(problem, solution);
-    }
+    }*/
+
 }
+
+
+template class FileCacheManager<string,string>;
+
+
+
+
 
 
 

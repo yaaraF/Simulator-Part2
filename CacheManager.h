@@ -8,14 +8,14 @@
 #define FILE_NAME "solutionTable.txt"
 
 #include <fstream>
-#include<unordered_map>
+#include <map>
 
 using namespace std;
 
 template <class P, class S>
 class CacheManager{
 protected:
-    unordered_map<P,S> solutions;
+   map<P,S> solutions;
 
 public:
     virtual bool isProblemExist(P problem)=0;
@@ -24,3 +24,4 @@ public:
 };
 
 #endif //PART2_CACHEMANAGER_H
+

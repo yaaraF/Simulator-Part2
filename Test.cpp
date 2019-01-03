@@ -3,10 +3,7 @@
 //
 
 #include "Test.h"
-#include "MySerialServer.h"
-#include "MyTestClientHandler.h"
-#include "Solver.h"
-#include "stringReverser.h"
+
 
 void Test::testSerial() {
     MySerialServer tester;
@@ -17,13 +14,23 @@ void Test::testSerial() {
 }
 
 void Test::testAll() {
- testReverse();
+ testFileMan();
 }
 
 void Test::testReverse() {
     stringReverser *stringReverser1 = new stringReverser();
     string a = stringReverser1->solve("!@#%");
    cout<<a<<endl;
+}
+
+void Test::testFileMan() {
+ FileCacheManager <string,string> f;
+   // CacheManager <string,string> *fileCacheManager= new FileCacheManager<string,string>();
+//  cout<<fileCacheManager->isProblemExist("hello")<<endl;
+//    fileCacheManager->saveSolution("hello","bye");
+//    cout<<fileCacheManager->isProblemExist("hello")<<endl;
+
+
 }
 
 
