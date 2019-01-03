@@ -5,12 +5,16 @@
 #ifndef PART2_CACHEMANAGER_H
 #define PART2_CACHEMANAGER_H
 
+#define FILE_NAME "solutionTable.txt"
+
+#include <fstream>
 #include<unordered_map>
 
 using namespace std;
 
 template <class P, class S>
 class CacheManager{
+protected:
     unordered_map<P,S> solutions;
 
 public:
