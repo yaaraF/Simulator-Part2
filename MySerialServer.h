@@ -8,9 +8,11 @@
 #include "Server.h"
 
 class MySerialServer:public Server {
+    int sockfd;
 public:
-    virtual void open(int port, ClientHandler cl);
+    virtual void open(int port, ClientHandler *cl);
     virtual void stop();
+    static void listenToClient(int sockfd, ClientHandler *cH);
 
 };
 

@@ -9,7 +9,7 @@
 
 class Server {
 public:
-    virtual void open(int port, ClientHandler cl)=0;
+    virtual void open(int port, ClientHandler *cl)=0;
     virtual void stop()=0;
 
 

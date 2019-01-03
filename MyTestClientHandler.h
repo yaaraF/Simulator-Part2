@@ -14,7 +14,7 @@ class MyTestClientHandler : public ClientHandler {
     Solver<string,string> *solver;
     CacheManager<string,string> *cm;
 public:
-    void handlerClient(iostream input, ostream output);
+    void handlerClient(int clientId);
 
 };
 
