@@ -12,7 +12,7 @@ void MyTestClientHandler::handlerClient(int clientId) {
     // If connection is established then start communicating
     bzero(buffer, 256);
     n = read(cliSock, buffer, 255);
-
+    cout << "now reading" << endl;
     if (n < 0) {
         perror("ERROR reading from socket");
         exit(1);
