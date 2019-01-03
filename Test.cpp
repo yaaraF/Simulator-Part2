@@ -24,11 +24,10 @@ void Test::testReverse() {
 }
 
 void Test::testFileMan() {
- FileCacheManager <string,string> f;
-   // CacheManager <string,string> *fileCacheManager= new FileCacheManager<string,string>();
-//  cout<<fileCacheManager->isProblemExist("hello")<<endl;
-//    fileCacheManager->saveSolution("hello","bye");
-//    cout<<fileCacheManager->isProblemExist("hello")<<endl;
+    CacheManager <string,string> *fileCacheManager= new FileCacheManager<string,string>();
+  cout<<fileCacheManager->isProblemExist("bye")<<endl;
+    fileCacheManager->saveSolution("hello","bye");
+    cout<<fileCacheManager->isProblemExist("hello")<<endl;
 
 
 }

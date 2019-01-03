@@ -15,12 +15,12 @@ using namespace std;
 template <class P, class S>
 class CacheManager{
 protected:
-   map<P,S> solutions;
+   map<string,string> solutions;
 
 public:
     virtual bool isProblemExist(P problem)=0;
     virtual S getSolution(P problem)=0;
-    virtual void saveSolution(S solution, P problem)=0;
+    virtual void saveSolution(P problem, S solution) =0;
 };
 
 #endif //PART2_CACHEMANAGER_H

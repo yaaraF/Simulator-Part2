@@ -14,8 +14,8 @@ public:
     FileCacheManager();
     virtual bool isProblemExist(P problem);
     virtual S getSolution(P problem);
-    virtual void saveSolution(S solution, P problem);
-    virtual void loadFileTable(ifstream file);
+    virtual void saveSolution(P problem, S solution);
+    virtual void loadFileTable();
     virtual void openF();
 };
 

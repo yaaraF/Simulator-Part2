@@ -30,7 +30,7 @@ void MyTestClientHandler::handlerClient(int clientId) {
 
         if(!this->cm->isProblemExist(buffer)){
           string solution = this->solver->solve(buffer);
-          this->cm->saveSolution(buffer,solution);
+            this->cm->saveSolution(solution, buffer);
         }
 
         this->writeTheSolution(clientId,buffer);
