@@ -50,9 +50,5 @@ void FileCacheManager<P, S>::loadFileTable(fstream file) {
     }
 }
 
-template<class P, class S>
-FileCacheManager<P, S>::~FileCacheManager() {
 
-
-}
 
