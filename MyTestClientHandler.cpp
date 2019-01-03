@@ -23,20 +23,17 @@ void MyTestClientHandler::handlerClient(int clientId) {
         if(strcmp(buffer,"end") == 0){
             return;
         }
-
         if (n < 0) {
             perror("ERROR reading from socket");
             exit(1);
         }
 
-        if(this->cm->isProblemExist(buffer)){
-            this->writeTheSolution(clientId,buffer);
-        }else{
-            this->cm->saveSolution(buffer,sou);
-
+        if(!this->cm->isProblemExist(buffer)){
+          string solution = this->solver->solve(buffer);
+          this->cm->saveSolution(buffer,solution);
         }
 
-
+        this->writeTheSolution(clientId,buffer);
     }
 
 
