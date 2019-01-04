@@ -2,7 +2,10 @@
 // Created by yaara on 1/3/19.
 //
 
+#include <thread>
+#include <iostream>
 #include "Test.h"
+using namespace std;
 
 
 void Test::testSerial() {
@@ -14,7 +17,7 @@ void Test::testSerial() {
 }
 
 void Test::testAll() {
- testFileMan();
+    tryToOpenAThred();
 }
 
 void Test::testReverse() {
@@ -32,4 +35,16 @@ void Test::testFileMan() {
 
 }
 
+void Test::tryToOpenAThred() {
 
+    thread thread1(printFromTHeThread);
+    thread1.join();
+}
+
+void Test::printFromTHeThread() {
+        int i = 0;
+        while(i < 20){
+            cout<<i<<endl;
+            i++;
+        }
+}

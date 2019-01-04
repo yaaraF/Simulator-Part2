@@ -15,8 +15,11 @@ class Test {
 void testSerial();
 void testReverse();
 void testFileMan();
+void tryToOpenAThred();
+
 public:
     void testAll();
+    static void printFromTHeThread();
 };
 
 

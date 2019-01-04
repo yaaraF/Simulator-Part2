@@ -52,7 +52,7 @@ template<class P, class S>
 void FileCacheManager<P, S>::loadFileTable() {
     fstream table;
     table.open(FILE_NAME, fstream::in | fstream::out | fstream::app);
-    if (!table) {
+    if (table.fail()) {
         throw "Failed in opening file";
     }
     if(!table.eof()) {
