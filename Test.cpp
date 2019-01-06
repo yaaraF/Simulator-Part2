@@ -38,7 +38,7 @@ void Test::testFileMan() {
 void Test::tryToOpenAThred() {
 
     thread thread1(printFromTHeThread);
-    thread1.join();
+    thread1.detach();
 }
 
 void Test::printFromTHeThread() {
