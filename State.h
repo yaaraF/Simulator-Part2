@@ -11,6 +11,7 @@ class State {
     T state;
     double cost;
     State<T> cameFrom;
+    bool isVisted;
 public:
     State(T s){
 
@@ -19,6 +20,14 @@ public:
 
     bool Equals(State<T> s){
         return this->state==s;
+    }
+
+    bool isIsVisted() const {
+        return isVisted;
+    }
+
+    void setIsVisted(bool isVisted) {
+        State::isVisted = isVisted;
     }
 
 };
