@@ -9,8 +9,10 @@
 #include <string>
 using namespace std;
 
+template <class T>
 class Searcher{
-   string search(Searchable *searchable);
+   virtual string search(Searchable<T> *searchable) = 0;
+   virtual int getNumberOfNodeElevatde() = 0;
 
 };
 
