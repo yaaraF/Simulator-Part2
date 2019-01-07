@@ -19,8 +19,8 @@ public:
     virtual State<T> getGoalState() = 0;
 
     virtual vector<State<T>>getAllPossibleStates(State<T> s) = 0;
-    virtual unsigned long int numberOfNodes() = 0;
-    virtual void ChangeTheVisit(bool visit,  int i ) = 0 ;
+
+    virtual void InitlizeAllStates() = 0;
 
 
 

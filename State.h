@@ -13,10 +13,7 @@ class State {
     State<T> cameFrom;
     bool isVisted;
 public:
-    State(T s){
-
-        this->state = s;
-    }
+    State(T state) : state(state) {}
 
     bool Equals(State<T> s){
         return this->state==s;
@@ -24,6 +21,14 @@ public:
 
     bool isIsVisted() const {
         return isVisted;
+    }
+
+    const State<T> &getCameFrom() const {
+        return cameFrom;
+    }
+
+    void setCameFrom(const State<T> &cameFrom) {
+        State::cameFrom = cameFrom;
     }
 
     void setIsVisted(bool isVisted) {

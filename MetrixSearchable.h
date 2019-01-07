@@ -7,7 +7,8 @@
 
 #include "Searchable.h"
 #include <vector>
-class MetrixSearchable: public Searchable<class T> {
+template <class T>
+class MetrixSearchable: public Searchable<T> {
     vector<vector<State <T>>> metrix;
     State<T> start;
     State<T> end;
@@ -21,26 +22,52 @@ public:
         return  this->end;
     }
 
-   /* virtual vector<State<T>>getAllPossibleStates(State<T> state){
-        vector<State<T>> canGo;
-        State<int> zero = new State<int>(0);
+    virtual vector<State<T>>getAllPossibleStates(State<T> state){
+      vector<State <T>> canGo;
+      int i , j; //we will get it in the constractor;
+      //we can go up down left and right.
+      //we will check the bondris of the metrix  to insert when can i go
+      if(i ==0 && j ==0 ){
+          State<T> temp = this->metrix[i][j+1];
+          canGo.push_back(temp);
+          canGo.push_back(this->metrix[i+1][j]);
 
-        for(int i = 1 ; i < this->metrix.size();i++){
-            if(state.Equals(this->metrix[i][0])){
-                for(int j = 1; j < this->metrix[i].size();j++){
-                    if(this->metrix[i][j].Equals(zero) )
-                }
-            }
-        }
+      }else if (i == 0 && j <this->metrix[i].size()){
+          canGo.push_back(this->metrix[i+1][j]);
+          canGo.push_back(this->metrix[i][j+1]);
+          canGo.push_back(this->metrix[i][j-1]);
+      }else if (j == 0 && i < this->metrix.size()) {
+          canGo.push_back(this->metrix[i - 1][j]);
+          canGo.push_back(this->metrix[i][j + 1]);
+          canGo.push_back(this->metrix[i+1][j]);
+      }
+      else if (j == this->metrix[i].size() && i == this->metrix.size()) {
+          canGo.push_back(this->metrix[i - 1][j]);
+          canGo.push_back(this->metrix[i][j - 1]);
+      }else if (j == this->metrix[i].size() && i < this->metrix.size()) {
+          canGo.push_back(this->metrix[i - 1][j]);
+          canGo.push_back(this->metrix[i][j - 1]);
+          canGo.push_back(this->metrix[i+1][j]);
+      }
+      else if (j < this->metrix[i].size() && i == this->metrix.size()) {
+          canGo.push_back(this->metrix[i - 1][j]);
+          canGo.push_back(this->metrix[i][j - 1]);
+          canGo.push_back(this->metrix[i][j+1]);
+      }else{
+          canGo.push_back(this->metrix[i - 1][j]);
+          canGo.push_back(this->metrix[i+1][j]);
+          canGo.push_back(this->metrix[i][j+1]);
+          canGo.push_back(this->metrix[i][j-1]);
+      }
 
-    }*/
+        return canGo;
 
-    virtual unsigned long int numberOfNodes(){
-        return this->metrix.size();
     }
 
-    virtual void ChangeTheVisit(bool visit , int i ){
-        this->metrix[i][0].setIsVisted(visit);
+
+    virtual void  InitlizeAllStates(){
+        for (int i = 1; i < this->metrix.size(); i++)
+            this->metrix[i][0].setIsVisted(false);
     }
 
 
