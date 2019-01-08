@@ -14,7 +14,11 @@ class State {
     bool isVisted;
     double PathCost;
 public:
-    State(T state) : state(state) {}
+    State(T state, double cost, bool isVisted) : state(state), cost(cost), isVisted(isVisted) {}
+
+    double getCost() const {
+        return cost;
+    }
 
     bool Equals(State<T> s){
         return this->state==s;
@@ -59,6 +63,10 @@ public:
 
     void setPathCost(double PathCost) {
         State::PathCost = PathCost;
+    }
+
+    void setState(T state) {
+        State::state = state;
     }
 
 };

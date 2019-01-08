@@ -9,7 +9,7 @@
 #include <vector>
 template <class T>
 class MetrixSearchable: public Searchable<T> {
-    vector<vector<State <vector<int>>>> metrix;
+    vector<vector<State <vector<int>>>*> metrix;
     State<T> start;
     State<T> end;
 
@@ -27,45 +27,53 @@ public:
         vector<int> pos = state.getState();
         int i = pos[0];
         int j = pos[1];
+        vector<State <vector<int>>> temp;
         vector<State <vector<int>>> canGo;
      //we will get it in the constractor;
       //we can go up down left and right.
       //we will check the bondris of the metrix  to insert when can i go
       if(i ==0 && j ==0 ){
-          canGo.push_back(this->metrix[i][j+1];);
-          canGo.push_back(this->metrix[i+1][j]);
+          temp.push_back(this->metrix[i][j+1]);
+          temp.push_back(this->metrix[i+1][j]);
 
       }else if (i == 0 && j <this->metrix[i].size()){
-          canGo.push_back(this->metrix[i+1][j]);
-          canGo.push_back(this->metrix[i][j+1]);
-          canGo.push_back(this->metrix[i][j-1]);
+          temp.push_back(this->metrix[i+1][j]);
+          temp.push_back(this->metrix[i][j+1]);
+          temp.push_back(this->metrix[i][j-1]);
       }else if (j == 0 && i < this->metrix.size()) {
-          canGo.push_back(this->metrix[i - 1][j]);
-          canGo.push_back(this->metrix[i][j + 1]);
-          canGo.push_back(this->metrix[i+1][j]);
+          temp.push_back(this->metrix[i - 1][j]);
+          temp.push_back(this->metrix[i][j + 1]);
+          temp.push_back(this->metrix[i+1][j]);
       }
       else if (j == this->metrix[i].size() && i == this->metrix.size()) {
-          canGo.push_back(this->metrix[i - 1][j]);
-          canGo.push_back(this->metrix[i][j - 1]);
+          temp.push_back(this->metrix[i - 1][j]);
+          temp.push_back(this->metrix[i][j - 1]);
       }else if (j == this->metrix[i].size() && i < this->metrix.size()) {
-          canGo.push_back(this->metrix[i - 1][j]);
-          canGo.push_back(this->metrix[i][j - 1]);
-          canGo.push_back(this->metrix[i+1][j]);
+          temp.push_back(this->metrix[i - 1][j]);
+          temp.push_back(this->metrix[i][j - 1]);
+          temp.push_back(this->metrix[i+1][j]);
       }
       else if (j < this->metrix[i].size() && i == this->metrix.size()) {
-          canGo.push_back(this->metrix[i - 1][j]);
-          canGo.push_back(this->metrix[i][j - 1]);
-          canGo.push_back(this->metrix[i][j+1]);
+          temp.push_back(this->metrix[i - 1][j]);
+          temp.push_back(this->metrix[i][j - 1]);
+          temp.push_back(this->metrix[i][j+1]);
       }else{
-          canGo.push_back(this->metrix[i - 1][j]);
-          canGo.push_back(this->metrix[i+1][j]);
-          canGo.push_back(this->metrix[i][j+1]);
-          canGo.push_back(this->metrix[i][j-1]);
+          temp.push_back(this->metrix[i - 1][j]);
+          temp.push_back(this->metrix[i+1][j]);
+          temp.push_back(this->metrix[i][j+1]);
+          temp.push_back(this->metrix[i][j-1]);
       }
-
+        for(int i=0; i<temp.size();++i){
+            if(temp[i].getCost()!=-1){
+             canGo.push_back(temp[i]);
+            }
+        }
         return canGo;
-
     }
+
+    MetrixSearchable(const vector<vector<State<vector<int>>> *> &metrix, const State<T> &start, const State<T> &end)
+            : metrix(metrix), start(start), end(end) {}
+
 
 
     /*virtual void  InitlizeAllStates(){
