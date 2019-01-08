@@ -14,9 +14,9 @@ class Searcher{
 public:
     virtual string search(Searchable<T> *searchable) = 0;
    virtual int getNumberOfNodeElevatde() = 0;
+
    vector<State<T>>ThePath(State<T> goal){
        vector<State<T>> path;
-
        path.insert(goal);
 
        while(goal.getCameFrom()!= NULL){

@@ -12,6 +12,7 @@ class State {
     double cost;
     State<T> cameFrom;
     bool isVisted;
+    double PathCost;
 public:
     State(T state) : state(state) {}
 
@@ -37,6 +38,27 @@ public:
 
     T getState() const {
         return state;
+    }
+     bool operator < (const State<T> &b) const{
+        return this->PathCost < b.PathCost;
+    }
+    bool operator >(const State<T> &b) const{
+        return this->PathCost > b.PathCost;
+    }
+    bool operator == (const State<T> &b) const{
+        return this->PathCost == b.PathCost;
+    }
+
+    double getCost() const {
+        return cost;
+    }
+
+    double getPathCost() const {
+        return PathCost;
+    }
+
+    void setPathCost(double PathCost) {
+        State::PathCost = PathCost;
     }
 
 };
