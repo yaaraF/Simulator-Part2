@@ -53,7 +53,7 @@ void MyClientHandler::handlerClient(int clientId) {
         }
     }
 
-    this->searcher->search(new MetrixSearchable <vector<int>>())
+    this->searcher->search(new MetrixSearchable <vector<int>>(this->metrix,this->start,this->exit));
 
 }
 
@@ -70,16 +70,19 @@ vector<string> MyClientHandler::split(string line){
     return details;
 }
 
-void MyClientHandler::addLineToMetrix(vector<string> line, int counter) {
-
+void MyClientHandler::addLineToMetrix(vector<string> line, int iCounter) {
     int temp;
-
-    for(int i=0;i<line.size();++i){
-        if(strcmp(line[i].c_str(),"-1") == 0){
+    vector<int> pos;
+    for(int j=0;j<line.size();++j){
+        if(strcmp(line[j].c_str(),"-1") == 0){
           temp=-1;
         }else {
-            temp = stoi(line[i]);
+            temp = stoi(line[j]);
         }
-        this->metrix[counter].push_back(temp);
+        pos.push_back(iCounter);
+        pos.push_back(j);
+        State<vector<int>> *myState=new State<vector<int>>(pos,temp,false);
+        this->metrix[iCounter].push_back(myState);
+        pos.clear();
     }
 }

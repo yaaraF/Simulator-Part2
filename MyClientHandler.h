@@ -16,7 +16,7 @@ class MyClientHandler:  ClientHandler {
    /* Solver<string,string> *solver;
     CacheManager<string,string> *cm;*/
    Searcher<vector<int>> * searcher;
-    vector<vector<int>> metrix;
+    vector<vector<State<vector<int>>*>> metrix;
     State<vector<int>> start;
     State<vector<int>> exit;
 public:

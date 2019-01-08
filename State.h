@@ -13,7 +13,11 @@ class State {
     State<T> cameFrom;
     bool isVisted;
 public:
-    State(T state) : state(state) {}
+    State(T state, double cost, bool isVisted) : state(state), cost(cost), isVisted(isVisted) {}
+
+    double getCost() const {
+        return cost;
+    }
 
     bool Equals(State<T> s){
         return this->state==s;
