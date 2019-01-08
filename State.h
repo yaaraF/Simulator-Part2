@@ -39,6 +39,10 @@ public:
         return state;
     }
 
+    void setState(T state) {
+        State::state = state;
+    }
+
 };
 
 
