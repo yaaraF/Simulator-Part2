@@ -9,7 +9,7 @@
 #include <vector>
 template <class T>
 class MetrixSearchable: public Searchable<T> {
-    vector<vector<State <T>>> metrix;
+    vector<vector<State <vector<int>>>> metrix;
     State<T> start;
     State<T> end;
 
@@ -23,8 +23,12 @@ public:
     }
 
     virtual vector<State<T>>getAllPossibleStates(State<T> state){
-      vector<State <T>> canGo;
-      int i , j; //we will get it in the constractor;
+     
+        vector<int> pos = state.getState();
+        int i = pos[0];
+        int j = pos[1];
+        vector<State <vector<int>>> canGo;
+     //we will get it in the constractor;
       //we can go up down left and right.
       //we will check the bondris of the metrix  to insert when can i go
       if(i ==0 && j ==0 ){
@@ -65,10 +69,10 @@ public:
     }
 
 
-    virtual void  InitlizeAllStates(){
+    /*virtual void  InitlizeAllStates(){
         for (int i = 1; i < this->metrix.size(); i++)
             this->metrix[i][0].setIsVisted(false);
-    }
+    }*/
 
 
 };

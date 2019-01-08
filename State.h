@@ -35,6 +35,10 @@ public:
         State::isVisted = isVisted;
     }
 
+    T getState() const {
+        return state;
+    }
+
 };
 
 
