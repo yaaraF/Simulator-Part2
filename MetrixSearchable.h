@@ -32,8 +32,7 @@ public:
       //we can go up down left and right.
       //we will check the bondris of the metrix  to insert when can i go
       if(i ==0 && j ==0 ){
-          State<T> temp = this->metrix[i][j+1];
-          canGo.push_back(temp);
+          canGo.push_back(this->metrix[i][j+1];);
           canGo.push_back(this->metrix[i+1][j]);
 
       }else if (i == 0 && j <this->metrix[i].size()){
