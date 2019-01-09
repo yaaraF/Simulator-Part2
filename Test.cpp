@@ -72,7 +72,7 @@ void Test::handlerClient(int clientId) {
 
    Searcher<vector<int>> *searcher = new BFS<vector<int>>();
     Searchable<vector<int>>* mat = new MetrixSearchable<vector<int>>(this->metrix,this->start,this->exit);
-    
+
 
 }
 
