@@ -9,7 +9,7 @@
 
 template <class T>
 class MetrixSearchable: public Searchable<T> {
-    vector<vector<State <vector<int>>>*> metrix;
+    vector<vector<State <vector<int>>*>> metrix;
     State<T> start;
     State<T> end;
 
@@ -69,19 +69,11 @@ public:
 //             canGo.push_back(temp[i]);
 //            }
 //        }
-//        return canGo;
+        return canGo;
     }
 
-    MetrixSearchable(const vector<vector<State<vector<int>>> *> &metrix, const State<T> &start, const State<T> &end)
+    MetrixSearchable(const vector<vector<State<vector<int>>*>> &metrix, const State<T> &start, const State<T> &end)
             : metrix(metrix), start(start), end(end) {}
-
-
-
-    /*virtual void  InitlizeAllStates(){
-        for (int i = 1; i < this->metrix.size(); i++)
-            this->metrix[i][0].setIsVisted(false);
-    }*/
-
 
 };
 

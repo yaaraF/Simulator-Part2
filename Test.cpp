@@ -3,6 +3,8 @@
 #include <cstring>
 #include <vector>
 #include "Test.h"
+#include "BFS.h"
+
 using namespace std;
 
 void Test::handlerClient(int clientId) {
@@ -68,7 +70,9 @@ void Test::handlerClient(int clientId) {
         }*/
     }
 
-   // this->searcher->search(new MetrixSearchable <vector<int>>(this->metrix,this->start,this->exit);
+   Searcher<vector<int>> *searcher = new BFS<vector<int>>();
+    Searchable<vector<int>>* mat = new MetrixSearchable<vector<int>>(this->metrix,this->start,this->exit);
+    
 
 }
 
