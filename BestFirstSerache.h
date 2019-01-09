@@ -11,7 +11,7 @@ using namespace std;
 template <class T>
 class BestFirstSearch:public SearcherExtend<T>{
 public:
-    virtual string search(Searchable<T> *searchable) {
+    virtual vector<string> search(Searchable<T> *searchable) {
         this->openList.add(searchable->getInitialState());
 
         unordered_set<State<T>> closed;

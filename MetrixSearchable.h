@@ -41,44 +41,87 @@ public:
          temp.push_back(this->metrix[i][j + 1]);
           temp.push_back(this->metrix[i + 1][j]);
      }
-      else if (i == 0 && j <this->metrix[i].size()){
+      else if (i == 0 && j <this->metrix[i].size()-1){
           temp.push_back(this->metrix[i+1][j]);
           temp.push_back(this->metrix[i][j+1]);
           temp.push_back(this->metrix[i][j-1]);
-      }else if (j == 0 && i < this->metrix.size()) {
+      }else if (i == 0 && j ==this->metrix[i].size()-1){
+         temp.push_back(this->metrix[i+1][j]);
+         temp.push_back(this->metrix[i][j-1]);
+     }
+
+      else if (j == 0 && i < this->metrix.size()-1) {
           temp.push_back(this->metrix[i - 1][j]);
           temp.push_back(this->metrix[i][j + 1]);
           temp.push_back(this->metrix[i+1][j]);
       }
-      else if (j == this->metrix[i].size() && i == this->metrix.size()) {
+     else if (j == 0 && i == this->metrix.size()-1) {
+         temp.push_back(this->metrix[i - 1][j]);
+         temp.push_back(this->metrix[i][j + 1]);
+     }
+      else if (j == this->metrix[i].size()-1 && i == this->metrix.size()-1) {
           temp.push_back(this->metrix[i - 1][j]);
           temp.push_back(this->metrix[i][j - 1]);
-      }else if (j == this->metrix[i].size() && i < this->metrix.size()) {
+      }else if (j == this->metrix[i].size()-1 && i < this->metrix.size()-1) {
           temp.push_back(this->metrix[i - 1][j]);
           temp.push_back(this->metrix[i][j - 1]);
           temp.push_back(this->metrix[i+1][j]);
       }
-      else if (j < this->metrix[i].size() && i == this->metrix.size()) {
-          temp.push_back(this->metrix[i - 1][j]);
-          temp.push_back(this->metrix[i][j - 1]);
-          temp.push_back(this->metrix[i][j+1]);
-      }else{
-          temp.push_back(this->metrix[i - 1][j]);
-          temp.push_back(this->metrix[i+1][j]);
-          temp.push_back(this->metrix[i][j+1]);
+      else if (j < this->metrix[i].size()-1 && i == this->metrix.size()-1) {
+         temp.push_back(this->metrix[i - 1][j]);
+         temp.push_back(this->metrix[i][j - 1]);
+         temp.push_back(this->metrix[i][j + 1]);
+
+     }else{
+
+         temp.push_back(this->metrix[i+1][j]);
+         temp.push_back(this->metrix[i][j+1]);
+         temp.push_back(this->metrix[i - 1][j]);
           temp.push_back(this->metrix[i][j-1]);
       }
 
+       if(!temp.empty()){
         for(int i=0; i<temp.size();++i){
-            if(temp[i]->getCost()!=-1){
-             canGo.push_back(temp[i]);
+            if(temp[i]->getCost()!=-1) {
+                canGo.push_back(temp[i]);
             }
+            }
+
         }
         return canGo;
     }
 
+    virtual vector<string> WhereToGo(vector<State<T>*> path){
+        string ans;
+        vector<string> went;
+        for(int i = 0 ; i < path.size()-1; i ++){
+            State<T>* r = path[i];
+            State<T> *second = path[i+1];
+            vector<int> cor = r->getState();
+            vector<int> next = second->getState();
+            if(cor[0]>next[0]){
+                ans = "up";
+            }else if(cor[1] > next[1]){
+                ans = "left";
+            }else if(cor[1]<next[1]){
+                ans = "right";
+
+            }else{
+                ans = "down";
+
+            }
+            went.push_back(ans);
+            ans = " ";
+            went.push_back(ans);
+        }
+        went.pop_back();
+        return went;
+    }
+
     MetrixSearchable(const vector<vector<State<vector<int>>*>> &metrix, const State<T> &start, const State<T> &end)
             : metrix(metrix), start(start), end(end) {}
+
+
 
 };
 

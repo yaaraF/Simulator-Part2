@@ -31,6 +31,7 @@ public:
 
     State(){
     this->cameFrom = NULL;
+
 }
 
 
@@ -48,7 +49,7 @@ public:
         return isVisted;
     }
 
-    const State<T> &getCameFrom() const {
+    State<T> *getCameFrom() const {
         return cameFrom;
     }
 
