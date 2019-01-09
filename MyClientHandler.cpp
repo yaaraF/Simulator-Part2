@@ -53,7 +53,6 @@ void MyClientHandler::handlerClient(int clientId) {
         }
 
     }
-
     this->searcher->search(new MetrixSearchable <vector<int>>(this->metrix,this->start,this->exit));
 
 }
