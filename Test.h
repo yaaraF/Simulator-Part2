@@ -19,8 +19,8 @@ class Test :public ClientHandler {
        vector<vector<State<vector<int>>*>> metrix;
 
 
-        //State<vector<int>>start;
-        //State<vector<int>> exit;
+        State<vector<int>>start;
+        State<vector<int>> exit;
 public:
 
     Test();

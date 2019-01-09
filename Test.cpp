@@ -49,12 +49,12 @@ void Test::handlerClient(int clientId) {
                 state.push_back(stoi(lineMetrix[1]));
                 if(!wasStart) {
                     wasStart=true;
-                    //this->start.setState(state);
+                    this->start.setState(state);
                     state.clear();
                 }
                 if(!wasExit){
                     wasExit=true;
-                    //this->exit.setState(state);
+                    this->exit.setState(state);
                     state.clear();
                 }
             }
@@ -107,7 +107,9 @@ void Test::addLineToMetrix(vector<string> line, int iCounter) {
     this->metrix.push_back(t);
 }
 
-Test::Test() {}
+Test::Test() {
+
+}
 
 
 

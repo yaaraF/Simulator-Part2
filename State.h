@@ -27,7 +27,9 @@ public:
                                                                            {this->PathCost = cost;
                                                                            this->cameFrom = NULL;}
 
-
+    State(){
+    this->cameFrom = NULL;
+}
 
 
 
