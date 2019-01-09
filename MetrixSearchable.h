@@ -21,56 +21,56 @@ public:
     virtual State<T> getGoalState() {
         return  this->end;
     }
-
     virtual vector<State<T>>getAllPossibleStates(State<T> state){
      
         vector<int> pos = state.getState();
         int i = pos[0];
         int j = pos[1];
-        vector<State <vector<int>>> temp;
-        vector<State <vector<int>>> canGo;
-     //we will get it in the constractor;
-      //we can go up down left and right.
-      //we will check the bondris of the metrix  to insert when can i go
-      if(i ==0 && j ==0 ){
-          temp.push_back(this->metrix[i][j+1]);
-          temp.push_back(this->metrix[i+1][j]);
-
-      }else if (i == 0 && j <this->metrix[i].size()){
-          temp.push_back(this->metrix[i+1][j]);
-          temp.push_back(this->metrix[i][j+1]);
-          temp.push_back(this->metrix[i][j-1]);
-      }else if (j == 0 && i < this->metrix.size()) {
-          temp.push_back(this->metrix[i - 1][j]);
-          temp.push_back(this->metrix[i][j + 1]);
-          temp.push_back(this->metrix[i+1][j]);
+      vector<State <vector<int>>> temp;
+       vector<State <vector<int>>> canGo;
+//     //we will get it in the constractor;
+//      //we can go up down left and right.
+//      //we will check the bondris of the metrix  to insert when can i go
+      if(i ==0 && j ==0 ) {
+          State <vector<int>> s=this->metrix[i][j + 1];
+          temp.push_back(s);
+         // temp.push_back(this->metrix[i + 1][j]);
       }
-      else if (j == this->metrix[i].size() && i == this->metrix.size()) {
-          temp.push_back(this->metrix[i - 1][j]);
-          temp.push_back(this->metrix[i][j - 1]);
-      }else if (j == this->metrix[i].size() && i < this->metrix.size()) {
-          temp.push_back(this->metrix[i - 1][j]);
-          temp.push_back(this->metrix[i][j - 1]);
-          temp.push_back(this->metrix[i+1][j]);
-      }
-      else if (j < this->metrix[i].size() && i == this->metrix.size()) {
-          temp.push_back(this->metrix[i - 1][j]);
-          temp.push_back(this->metrix[i][j - 1]);
-          temp.push_back(this->metrix[i][j+1]);
-      }else{
-          temp.push_back(this->metrix[i - 1][j]);
-          temp.push_back(this->metrix[i+1][j]);
-          temp.push_back(this->metrix[i][j+1]);
-          temp.push_back(this->metrix[i][j-1]);
-      }
-        for(int i=0; i<temp.size();++i){
-            if(temp[i].getCost()!=-1){
-             canGo.push_back(temp[i]);
-            }
-        }
-        return canGo;
+//
+//      }else if (i == 0 && j <this->metrix[i].size()){
+//          temp.push_back(this->metrix[i+1][j]);
+//          temp.push_back(this->metrix[i][j+1]);
+//          temp.push_back(this->metrix[i][j-1]);
+//      }else if (j == 0 && i < this->metrix.size()) {
+//          temp.push_back(this->metrix[i - 1][j]);
+//          temp.push_back(this->metrix[i][j + 1]);
+//          temp.push_back(this->metrix[i+1][j]);
+//      }
+//      else if (j == this->metrix[i].size() && i == this->metrix.size()) {
+//          temp.push_back(this->metrix[i - 1][j]);
+//          temp.push_back(this->metrix[i][j - 1]);
+//      }else if (j == this->metrix[i].size() && i < this->metrix.size()) {
+//          temp.push_back(this->metrix[i - 1][j]);
+//          temp.push_back(this->metrix[i][j - 1]);
+//          temp.push_back(this->metrix[i+1][j]);
+//      }
+//      else if (j < this->metrix[i].size() && i == this->metrix.size()) {
+//          temp.push_back(this->metrix[i - 1][j]);
+//          temp.push_back(this->metrix[i][j - 1]);
+//          temp.push_back(this->metrix[i][j+1]);
+//      }else{
+//          temp.push_back(this->metrix[i - 1][j]);
+//          temp.push_back(this->metrix[i+1][j]);
+//          temp.push_back(this->metrix[i][j+1]);
+//          temp.push_back(this->metrix[i][j-1]);
+//      }
+//        for(int i=0; i<temp.size();++i){
+//            if(temp[i].getCost()!=-1){
+//             canGo.push_back(temp[i]);
+//            }
+//        }
+//        return canGo;
     }
-
     MetrixSearchable(const vector<vector<State<vector<int>>> *> &metrix, const State<T> &start, const State<T> &end)
             : metrix(metrix), start(start), end(end) {}
 
