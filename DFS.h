@@ -13,7 +13,7 @@ template <class T>
 class DFS:public Searcher<T> {
 
 public:
-    virtual string search(Searchable<T> *searchable) {
+    virtual vector<string> search(Searchable<T> *searchable) {
         // Initially mark all verices as not visited
         //vector<bool> visited(V, false);
         State<T> goal = searchable->getGoalState();

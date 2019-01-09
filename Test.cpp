@@ -73,7 +73,10 @@ void Test::handlerClient(int clientId) {
    cout<<end->getState()[0]<<end->getState()[1]<<endl;
     cout<<begin->getState()[0]<<begin->getState()[1]<<endl;
     vector<State<vector<int>>*> close = mat->getAllPossibleStates(begin);
-    string hello = searcher->search(mat);
+    vector<string> hello = searcher->search(mat);
+   for(int i = 0; i < hello.size();i++){
+       cout<<hello[i]<<endl;
+   }
 
 }
 

@@ -13,7 +13,7 @@ template <class T>
 class BFS:public Searcher<T> {
 
 public:
-    virtual string search(Searchable<T> *searchable);
+    virtual vector<string> search(Searchable<T> *searchable);
     virtual int getNumberOfNodeElevatde(){
         return  4;
     }
@@ -22,7 +22,7 @@ public:
 };
 
 template<class T>
-string BFS<T>::search(Searchable< T> *searchable) {
+vector<string> BFS<T>::search(Searchable< T> *searchable) {
 // Mark all the vertices as not visited
 
    // searchable->InitlizeAllStates();
@@ -33,6 +33,7 @@ string BFS<T>::search(Searchable< T> *searchable) {
     State<T> *current = searchable->getInitalState();
     State<T> *endNode = searchable->getGoalState();
     current->setIsVisted(true);
+
     queue.push_back(current);
 
 
@@ -68,9 +69,11 @@ string BFS<T>::search(Searchable< T> *searchable) {
 
     }
 
-    //vector<State<T>> path = this->ThePath(searchable->getGoalState());
-    string r = "hi";
-    return r;
+    vector<State<T>*> path = this->ThePath(searchable->getGoalState());
+
+    vector<string> solution =  searchable->WhereToGo(path);
+    return solution;
+
 }
 
 

@@ -7,6 +7,7 @@
 
 #include "State.h"
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -18,6 +19,8 @@ public:
     virtual State<T>* getGoalState() = 0;
 
     virtual vector<State<T>*>getAllPossibleStates(State<T>* s) = 0;
+
+    virtual vector<string>WhereToGo(vector<State<T>*> path) = 0 ;
 
 };
 
