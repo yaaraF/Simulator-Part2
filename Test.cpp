@@ -53,26 +53,27 @@ void Test::handlerClient(int clientId) {
                     wasStart=true;
                     this->start.setState(state);
                     state.clear();
-                }
-                if(!wasExit){
+                }else{
                     wasExit=true;
                     this->exit.setState(state);
                     state.clear();
                 }
             }
-        }
-        if(strcmp(line.c_str(),"end") == 0){
+        }else{
             afterEnd=true;
         }
-        /*if (n < 0) {
-            perror("ERROR reading from socket");
-            exit(1);
-        }*/
     }
 
    Searcher<vector<int>> *searcher = new BFS<vector<int>>();
     Searchable<vector<int>>* mat = new MetrixSearchable<vector<int>>(this->metrix,this->start,this->exit);
+    State<vector<int>> *begin = mat->getInitalState();
+   cout<<begin->getState()[0]<<begin->getState()[1]<<endl;
+   State<vector<int>> *end = mat->getGoalState();
 
+   cout<<end->getState()[0]<<end->getState()[1]<<endl;
+    cout<<begin->getState()[0]<<begin->getState()[1]<<endl;
+    vector<State<vector<int>>*> close = mat->getAllPossibleStates(begin);
+    string hello = searcher->search(mat);
 
 }
 

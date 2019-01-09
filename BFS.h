@@ -14,7 +14,9 @@ class BFS:public Searcher<T> {
 
 public:
     virtual string search(Searchable<T> *searchable);
-    virtual int getNumberOfNodeElevatde();
+    virtual int getNumberOfNodeElevatde(){
+        return  4;
+    }
 
 
 };
@@ -25,14 +27,14 @@ string BFS<T>::search(Searchable< T> *searchable) {
 
    // searchable->InitlizeAllStates();
 
-    list<State<T>> queue;
-    typename vector<State<T>>::iterator it;
+    list<State<T>*> queue;
+    typename vector<State<T>*>::iterator it;
 
-    State<T> current = searchable->getInitalState();
-    State<T> endNode = searchable->getGoalState();
-    current.setIsVisted(true);
+    State<T> *current = searchable->getInitalState();
+    State<T> *endNode = searchable->getGoalState();
+    current->setIsVisted(true);
     queue.push_back(current);
-    current.setCameFrom(NULL);
+
 
 // 'i' will be used to get all adjacent
 // vertices of a vertex
@@ -42,7 +44,7 @@ string BFS<T>::search(Searchable< T> *searchable) {
         // Dequeue a vertex from queue and print it
         current = queue.front();
         //if we found a path
-        if(current.Equals(endNode)){
+        if(current->Equals(endNode)){
             break;
         }
         //cout << current << " ";
@@ -52,21 +54,23 @@ string BFS<T>::search(Searchable< T> *searchable) {
         // vertex s. If a adjacent has not been visited,
         // then mark it visited and enqueue it
 
-        vector<State<T>> canGo = searchable->getAllPossibleStates(current);
+        vector<State<T>*> canGo = searchable->getAllPossibleStates(current);
        it = canGo.begin();
         for(; it!= canGo.end() ;++it){
 
-            State<T> temp = (*it);
-            if( !temp.isIsVisted()) {
-                temp.setIsVisted(true);
-                temp.setCameFrom(&current);
+            State<T> *temp = (*it);
+            if( !temp->isIsVisted()) {
+                temp->setIsVisted(true);
+                temp->setCameFrom(current);
                 queue.push_back(temp);
             }
         }
 
     }
 
-    vector<State<T>> path = this->ThePath(searchable->getGoalState());
+    //vector<State<T>> path = this->ThePath(searchable->getGoalState());
+    string r = "hi";
+    return r;
 }
 
 

@@ -7,6 +7,8 @@
 
 
 #include <clocale>
+#include <vector>
+using namespace std;
 
 template <class T>
 class State {
@@ -38,8 +40,8 @@ public:
         return cost;
     }
 
-    bool Equals(State<T> s){
-        return this->state==s;
+    bool Equals(State<T>* s){
+        return this->state==s->getState();
     }
 
     bool isIsVisted() const {
@@ -50,7 +52,7 @@ public:
         return cameFrom;
     }
 
-    void setCameFrom(const State<T> &cameFrom) {
+    void setCameFrom(State<T> *cameFrom) {
         State::cameFrom = cameFrom;
     }
 
@@ -61,14 +63,14 @@ public:
     T getState() const {
         return state;
     }
-     bool operator < (const State<T> &b) const{
-        return this->PathCost < b.PathCost;
+     bool operator < (const State<T>* &b) const{
+        return this->PathCost < b->PathCost;
     }
-    bool operator >(const State<T> &b) const{
-        return this->PathCost > b.PathCost;
+    bool operator >(const State<T>* &b) const{
+        return this->PathCost > b->PathCost;
     }
-    bool operator == (const State<T> &b) const{
-        return this->PathCost == b.PathCost;
+    bool operator == (const State<T>* &b) const{
+        return this->PathCost == b->PathCost;
     }
 
 
@@ -83,6 +85,13 @@ public:
     void setState(T state) {
         State::state = state;
     }
+
+    /*bool operator == (const State<vector<int>>* &b) const{
+        vector<int > a = this->getState();
+        vector<int> c = b->getState();
+        return a[0]== c[0]&& a[1] == c[1];
+    }*/
+
 
 };
 
