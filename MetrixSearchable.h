@@ -6,7 +6,7 @@
 #define PART2_METRIXSEARCHABLE_H
 
 #include "Searchable.h"
-#include <vector>
+
 template <class T>
 class MetrixSearchable: public Searchable<T> {
     vector<vector<State <vector<int>>>*> metrix;

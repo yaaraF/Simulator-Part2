@@ -53,9 +53,7 @@ public:
         return this->PathCost == b.PathCost;
     }
 
-    double getCost() const {
-        return cost;
-    }
+    
 
     double getPathCost() const {
         return PathCost;
