@@ -23,6 +23,12 @@ void MyClientHandler::handlerClient(int clientId) {
         // If connection is established then start communicating
         bzero(buffer, 1000);
         n = read(clientId, buffer, 1000);
+
+        if (n < 0) {
+            perror("ERROR reading from socket");
+           // exit(1);
+        }
+
         if(strcmp(buffer,"end") != 0 ){
             if(!afterEnd) {
                 lineMetrix = split(buffer);
@@ -36,21 +42,16 @@ void MyClientHandler::handlerClient(int clientId) {
                     wasStart=true;
                     this->start.setState(state);
                     state.clear();
-                }
-                if(!wasExit){
+                }else{
                     wasExit=true;
                     this->exit.setState(state);
                     state.clear();
                 }
             }
-        }
-        if(strcmp(buffer,"end") == 0){
+        }else{
             afterEnd=true;
         }
-        if (n < 0) {
-            perror("ERROR reading from socket");
-            exit(1);
-        }
+
     }
 
     this->searcher->search(new MetrixSearchable <vector<int>>(this->metrix,this->start,this->exit));
