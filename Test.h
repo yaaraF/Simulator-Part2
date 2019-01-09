@@ -5,21 +5,29 @@
 #ifndef PART2_TEST_H
 #define PART2_TEST_H
 
-#include "FileCacheManager.h"
-#include "MySerialServer.h"
-#include "MyTestClientHandler.h"
+#include "ClientHandler.h"
 #include "Solver.h"
-#include "stringReverser.h"
+#include "CacheManager.h"
+#include "State.h"
+#include "Searcher.h"
+#include "MetrixSearchable.h"
 
-class Test {
-void testSerial();
-void testReverse();
-void testFileMan();
-void tryToOpenAThred();
+class Test :public ClientHandler {
+        /* Solver<string,string> *solver;
+         CacheManager<string,string> *cm;*/
+    //    Searcher<vector<int>> * searcher;
+       vector<vector<State<vector<int>>*>> metrix;
 
+
+        //State<vector<int>>start;
+        //State<vector<int>> exit;
 public:
-    void testAll();
-    static void printFromTHeThread();
+
+    Test();
+
+    void handlerClient(int clientId);
+        vector<string> split(string line);
+        void addLineToMetrix(vector<string> line,int counter);
 };
 
 

@@ -71,6 +71,7 @@ public:
 //        }
 //        return canGo;
     }
+
     MetrixSearchable(const vector<vector<State<vector<int>>> *> &metrix, const State<T> &start, const State<T> &end)
             : metrix(metrix), start(start), end(end) {}
 

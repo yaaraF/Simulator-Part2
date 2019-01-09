@@ -23,6 +23,29 @@ public:
         return temp;
     }
 
+    void add(State<T>s ){
+        this->pq.push(s);
+    }
+
+    bool contains(State<T>s){
+       bool returnVal = false;
+        vector<State <T>> temp;
+        while(!this->pq.empty()){
+            State<T> var = this->popFromthePq();
+            if(var.Equals(s)){
+                returnVal = true;
+                break;
+            }
+
+        }
+        for(int i = 0 ; i <temp.size();i++ ){
+            this->add(temp[i]);
+        }
+
+        return returnVal;
+
+    }
+
 
 
 

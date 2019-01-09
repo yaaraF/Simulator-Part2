@@ -5,16 +5,32 @@
 #ifndef PART2_STATE_H
 #define PART2_STATE_H
 
+
+#include <clocale>
+
 template <class T>
 class State {
 
     T state;
     double cost;
-    State<T> cameFrom;
+    State <T> *cameFrom;
     bool isVisted;
     double PathCost;
 public:
-    State(T state, double cost, bool isVisted) : state(state), cost(cost), isVisted(isVisted) {}
+
+//    State(T state, double cost, const State<T> &cameFrom, bool isVisted) : state(state), cost(cost), cameFrom(cameFrom),
+//                                                                           isVisted(isVisted) {}
+
+        State(T state, double cost, bool isVisted) : state(state), cost(cost),
+                                                                           isVisted(isVisted)
+
+                                                                           {this->PathCost = cost;
+                                                                           this->cameFrom = NULL;}
+
+
+
+
+
 
     double getCost() const {
         return cost;
@@ -53,9 +69,6 @@ public:
         return this->PathCost == b.PathCost;
     }
 
-    /*double getCost() const {
-        return cost;
-    }*/
 
     double getPathCost() const {
         return PathCost;
