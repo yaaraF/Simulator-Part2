@@ -9,7 +9,7 @@
 using namespace std;
 class ClientHandler{
 public:
-    virtual void handlerClient(int clientId) =0;
+    //static void handlerClient(int clientId);
 };
 
 #endif //PART2_CLIENTHANDLER_H

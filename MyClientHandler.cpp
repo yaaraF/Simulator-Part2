@@ -39,10 +39,18 @@ void MyClientHandler::handlerClient(int clientId) {
                 state.push_back(stoi(lineMetrix[0]));
                 state.push_back(stoi(lineMetrix[1]));
                 if(!wasStart) {
+                    if(state[0]<0|| state[1]<0||state[0]>this->metrix.size()
+                        || state[1]>this->metrix[state[0]].size()){
+                        throw "not valid exit state";
+                    }
                     wasStart=true;
                     this->start.setState(state);
                     state.clear();
                 }else{
+                    if(state[0]<0 || state[1]<0 || state[0]>this->metrix.size()
+                        || state[1]>this->metrix[state[0]].size()){
+                        throw "not valid exit state";
+                    }
                     wasExit=true;
                     this->exit.setState(state);
                     state.clear();
@@ -53,6 +61,7 @@ void MyClientHandler::handlerClient(int clientId) {
         }
 
     }
+
     this->searcher->search(new MetrixSearchable <vector<int>>(this->metrix,this->start,this->exit));
 
 }

@@ -5,8 +5,7 @@
 #include "MyParallelServer.h"
 #include <cstring>
 
-
-void ParallelServer::open(int port, ClientHandler *cH) {
+void MyParallelServer::open(int port, ClientHandler *cH) {
     int sockfd ,portno;
     struct sockaddr_in serv_addr;
 
@@ -33,6 +32,39 @@ void ParallelServer::open(int port, ClientHandler *cH) {
         exit(1);
     }
 
-   // thread thread1(listenToClient, this->sockfd,cH);
+    //listenToClient(this->serverfd,cH);
+    thread thread1(threadManager, this->serverfd,cH);
 
+}
+
+void MyParallelServer::stop() {
+
+}
+
+void MyParallelServer::threadManager(int sockfd, ClientHandler *cH) {
+    struct sockaddr_in cli_addr;
+    int clilen, cliSock;
+
+    while (true) {
+        listen(sockfd, 1);
+        clilen = sizeof(cli_addr);
+        timeval timeout;
+        timeout.tv_sec = 20;
+        timeout.tv_usec = 0;
+        setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout));
+        // Accept actual connection from the client
+        cliSock = accept(sockfd, (struct sockaddr *) &cli_addr,
+                         (socklen_t *) &clilen);
+        if (cliSock < 0)	{
+            if (errno == EWOULDBLOCK)	{
+                cout << "timeout!" << endl;
+                exit(2);
+            }	else	{
+                perror("other error");
+                exit(3);
+            }
+        }
+        //TODO THREAD-problem with static.
+      //  thread thread1(MyClientHandler::handlerClient, sockfd);
+    }
 }

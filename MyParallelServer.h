@@ -9,14 +9,18 @@
 #include <strings.h>
 #include <unistd.h>
 #include <thread>
-#include "ClientHandler.h"
+//#include "ClientHandler.h"
+#include "MyClientHandler.h"
 
-class ParallelServer {
+class MyParallelServer {
     int port;
     int clientfd;
     int serverfd;
 public:
     void open(int port, ClientHandler *cH);
+    void stop();
+    static void threadManager(int sockfd, ClientHandler *cH);
+
 
 };
 

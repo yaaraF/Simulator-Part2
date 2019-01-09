@@ -63,7 +63,7 @@ void MySerialServer::listenToClient(int sockfd, ClientHandler *cH) {
             exit(1);
         }
 
-        cH->handlerClient(cliSock);
+      //  cH->handlerClient(cliSock);
 
     }
 }
