@@ -4,6 +4,7 @@
 #include <vector>
 #include "Test.h"
 #include "BFS.h"
+#include "DFS.h"
 
 using namespace std;
 
@@ -64,7 +65,7 @@ void Test::handlerClient(int clientId) {
         }
     }
 
-   Searcher<vector<int>> *searcher = new BFS<vector<int>>();
+   Searcher<vector<int>> *searcher = new DFS<vector<int>>();
     Searchable<vector<int>>* mat = new MetrixSearchable<vector<int>>(this->metrix,this->start,this->exit);
     State<vector<int>> *begin = mat->getInitalState();
    cout<<begin->getState()[0]<<begin->getState()[1]<<endl;
