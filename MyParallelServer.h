@@ -9,20 +9,27 @@
 #include <strings.h>
 #include <unistd.h>
 #include <thread>
-//#include "ClientHandler.h"
+#include "Server.h"
 #include "MyClientHandler.h"
 
-class MyParallelServer {
-    int port;
-    int clientfd;
-    int serverfd;
-public:
-    void open(int port, ClientHandler *cH);
-    void stop();
-    static void threadManager(int sockfd, ClientHandler *cH);
+
+    class MyParallelServer : public Server {
+        struct dataPass *passingData = new dataPass();
+        vector<pthread_t> threadList;
+        int port;
+        int sockfd;
+        int serverfd;
+        vector <pthread_t> threads;
+    public:
+        void open(int port, ClientHandler *cH);
+
+        void stop();
+
+        static void* threadManager (void* data);
 
 
-};
+
+    };
 
 
 #endif //PART2_PARALLELSERVER_H
