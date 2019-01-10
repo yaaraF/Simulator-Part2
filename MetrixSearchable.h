@@ -13,7 +13,7 @@ class MetrixSearchable: public Searchable<T> {
     vector<vector<State <vector<int>>*>> metrix;
     State<T> start;
     State<T> end;
-
+    string matrixStr;
 
 public:
     virtual State <T>* getInitalState() {
@@ -92,7 +92,33 @@ public:
         return canGo;
     }
 
-    virtual vector<string> WhereToGo(vector<State<T>*> path){
+    virtual string WhereToGo(vector<State<T>*> path){
+        string ans;
+        string went;
+        for(int i = 0 ; i < path.size()-1; i ++){
+            State<T>* r = path[i];
+            State<T> *second = path[i+1];
+            vector<int> cor = r->getState();
+            vector<int> next = second->getState();
+            if(cor[0]>next[0]){
+                ans = "up";
+            }else if(cor[1] > next[1]){
+                ans = "left";
+            }else if(cor[1]<next[1]){
+                ans = "right";
+
+            }else{
+                ans = "down";
+
+            }
+            went+=ans;
+            ans = ",";
+            went+=ans;
+        }
+        went.pop_back();
+        return went;
+    }
+    /*virtual vector<string> WhereToGo(vector<State<T>*> path){
         string ans;
         vector<string> went;
         for(int i = 0 ; i < path.size()-1; i ++){
@@ -117,10 +143,10 @@ public:
         }
         went.pop_back();
         return went;
-    }
+    }*/
 
-    MetrixSearchable(const vector<vector<State<vector<int>>*>> &metrix, const State<T> &start, const State<T> &end)
-            : metrix(metrix), start(start), end(end) {}
+    MetrixSearchable(const vector<vector<State<vector<int>> *>> &metrix, const State<T> &start, const State<T> &end,
+                     const string &matrixStr) : metrix(metrix), start(start), end(end), matrixStr(matrixStr) {}
 
 
 };

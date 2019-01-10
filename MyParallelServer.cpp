@@ -45,6 +45,21 @@ void MyParallelServer::threadManager(int sockfd, ClientHandler *cH) {
     struct sockaddr_in cli_addr;
     int clilen, cliSock;
 
+    while (!(params->shouldStop)){
+        clientSocketVal = ::accept(params->sockServer, (struct sockaddr *) &client_sock, (socklen_t *) &clilen);
+        params->sockClient = clientSocketVal;
+        if (params->sockClient < 0) {
+            throw invalid_argument("connection with client failed");
+        }
+        int valread = read( clientSocketVal , buffer, 1024);
+        printf("%s\n",buffer );
+        send(clientSocketVal , hello , strlen(hello) , 0 );
+        printf("Hello message sent\n");
+        //args->getClient()->handleClient(&socketRead,&socketWriter);
+        pthread_t threadId;
+        pthread_create(&threadId, nullptr, &handleClient, params);
+    }
+
     while (true) {
         listen(sockfd, 1);
         clilen = sizeof(cli_addr);

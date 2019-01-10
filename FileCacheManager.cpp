@@ -32,14 +32,14 @@ bool FileCacheManager<P, S>::isProblemExist(P problem) {
 
 template<class P, class S>
 S FileCacheManager<P, S>::getSolution(P problem) {
-    //return this->solutions.at(problem);
+    return this->solutions.at(problem);
 }
 
 template<class P, class S>
 void FileCacheManager<P, S>::saveSolution(P problem, S solution) {
     ofstream table(FILE_NAME, ios::app);
     // TODO each problem and solution need toString!!
-    table << problem << "$";
+    table << problem << "$$$";
     table << solution << endl;
     table.close();
     // save the new solution to the solutions
@@ -58,9 +58,9 @@ void FileCacheManager<P, S>::loadFileTable() {
     if(!table.eof()) {
         string line;
         while (getline(table, line)) {
-            size_t pos = line.find("$");
+            size_t pos = line.find("$$$");
             string problem = line.substr(0, pos);
-            string solution = line.substr(pos + 1, line.length() - 1);
+            string solution = line.substr(pos + 3, line.length() - 1);
             this->solutions.insert(pair<P,S>(problem,solution));
         }
     }

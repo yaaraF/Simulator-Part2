@@ -26,10 +26,10 @@ void Test::handlerClient(int clientId) {
 
     while(!wasExit) {
 
-        string line;
+        string buffer;
         if(!table.eof()) {
           //line = "";
-            getline(table, line);
+            getline(table, buffer);
         }else{
             break;
         }
@@ -41,43 +41,64 @@ void Test::handlerClient(int clientId) {
 
         // If connection is established then start communicating
 
-        if(strcmp(line.c_str(),"end") != 0 ){
-            if(!afterEnd) {
-                lineMetrix = split(line);
+        if (strcmp(buffer.c_str(), "end") != 0) {
+            if (!afterEnd) {
+                this->matrixStr += buffer;
+                this->matrixStr+="$";
+                lineMetrix = split(buffer);
                 addLineToMetrix(lineMetrix, countLine);
                 countLine++;
-            }else{
-                lineMetrix = split(line);
+            } else {
+                lineMetrix = split(buffer);
                 state.push_back(stoi(lineMetrix[0]));
                 state.push_back(stoi(lineMetrix[1]));
-                if(!wasStart) {
-                    wasStart=true;
+                if (!wasStart) {
+                    if (state[0] < 0 || state[1] < 0 || state[0] > this->metrix.size()
+                        || state[1] > this->metrix[state[0]].size()) {
+                        throw "not valid exit state";
+                    }
+                    this->matrixStr += buffer;
+                    wasStart = true;
                     this->start.setState(state);
                     state.clear();
-                }else{
-                    wasExit=true;
+                } else {
+                    if (state[0] < 0 || state[1] < 0 || state[0] > this->metrix.size()
+                        || state[1] > this->metrix[state[0]].size()) {
+                        throw "not valid exit state";
+                    }
+                    this->matrixStr += buffer;
+                    wasExit = true;
                     this->exit.setState(state);
                     state.clear();
                 }
             }
-        }else{
-            afterEnd=true;
+        } else {
+            afterEnd = true;
         }
+
     }
 
    Searcher<vector<int>> *searcher = new DFS<vector<int>>();
-    Searchable<vector<int>>* mat = new MetrixSearchable<vector<int>>(this->metrix,this->start,this->exit);
+    Searchable<vector<int>>* mat = new MetrixSearchable<vector<int>>(this->metrix,this->start,this->exit,this->matrixStr);
     State<vector<int>> *begin = mat->getInitalState();
    cout<<begin->getState()[0]<<begin->getState()[1]<<endl;
    State<vector<int>> *end = mat->getGoalState();
 
+
    cout<<end->getState()[0]<<end->getState()[1]<<endl;
     cout<<begin->getState()[0]<<begin->getState()[1]<<endl;
     vector<State<vector<int>>*> close = mat->getAllPossibleStates(begin);
-    vector<string> hello = searcher->search(mat);
-   for(int i = 0; i < hello.size();i++){
-       cout<<hello[i]<<endl;
-   }
+    string solution;
+    if (!this->cm->isProblemExist(this->matrixStr)) {
+        solution = searcher->search(mat);
+        this->cm->saveSolution(this->matrixStr, solution);
+    } else {
+        this->writeTheSolution(clientId, this->matrixStr.c_str());
+    }
+    //string hello = searcher->search(mat);
+   cout<<solution<<endl;
+
+
 
 }
 
@@ -116,8 +137,20 @@ void Test::addLineToMetrix(vector<string> line, int iCounter) {
     this->metrix.push_back(t);
 }
 
-Test::Test() {
+void Test::writeTheSolution(int id, const char* problem) {
+    string solution = this->cm->getSolution(problem);
+    cout<<"hiii "<<endl;
+    cout<<solution<<endl;
+   /* ssize_t n = write(id, solution.c_str(), 1024);
 
+    if (n < 0) {
+        perror("ERROR writing to socket");
+        //exit(1);
+    }*/
+}
+
+Test::Test() {
+    this->cm=new FileCacheManager<string,string>();
 }
 
 

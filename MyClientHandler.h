@@ -13,16 +13,18 @@
 #include "MetrixSearchable.h"
 
 class MyClientHandler:  ClientHandler {
-   /* Solver<string,string> *solver;
-    CacheManager<string,string> *cm;*/
+    //Solver<string,string> *solver;
+    CacheManager<string,string> *cm;
    Searcher<vector<int>> * searcher;
     vector<vector<State<vector<int>>*>> metrix;
     State<vector<int>> start;
     State<vector<int>> exit;
+    string matrixStr;
 public:
     void handlerClient(int clientId);
     vector<string> split(string line);
     void addLineToMetrix(vector<string> line,int counter);
+    void writeTheSolution(int id,const char* problem);
 };
 
 

@@ -20,7 +20,7 @@ public:
 
     virtual vector<State<T>*>getAllPossibleStates(State<T>* s) = 0;
 
-    virtual vector<string>WhereToGo(vector<State<T>*> path) = 0 ;
+    virtual string WhereToGo(vector<State<T>*> path) = 0 ;
 
 };
 

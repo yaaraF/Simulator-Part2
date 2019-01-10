@@ -13,7 +13,7 @@ using namespace std;
 template <class T>
 class Searcher{
 public:
-    virtual vector<string> search(Searchable<T> *searchable) = 0;
+    virtual string search(Searchable<T> *searchable) = 0;
    virtual int getNumberOfNodeElevatde() = 0;
 
 

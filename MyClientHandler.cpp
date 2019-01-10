@@ -6,6 +6,7 @@
 #include <cstring>
 #include <vector>
 #include "MyClientHandler.h"
+
 using namespace std;
 
 void MyClientHandler::handlerClient(int clientId) {
@@ -13,12 +14,12 @@ void MyClientHandler::handlerClient(int clientId) {
     ssize_t n;
     vector<string> lineMetrix;
     vector<int> state;
-    int countLine=0;
-    bool afterEnd=false;
-    bool wasStart=false;
-    bool wasExit=false;
+    int countLine = 0;
+    bool afterEnd = false;
+    bool wasStart = false;
+    bool wasExit = false;
 
-    while(!wasExit) {
+    while (!wasExit) {
         char buffer[1000];
         // If connection is established then start communicating
         bzero(buffer, 1000);
@@ -26,47 +27,56 @@ void MyClientHandler::handlerClient(int clientId) {
 
         if (n < 0) {
             perror("ERROR reading from socket");
-           // exit(1);
+            // exit(1);
         }
 
-        if(strcmp(buffer,"end") != 0 ){
-            if(!afterEnd) {
+        if (strcmp(buffer, "end") != 0) {
+            if (!afterEnd) {
+                this->matrixStr += buffer;
+                this->matrixStr+="$";
                 lineMetrix = split(buffer);
                 addLineToMetrix(lineMetrix, countLine);
                 countLine++;
-            }else{
+            } else {
                 lineMetrix = split(buffer);
                 state.push_back(stoi(lineMetrix[0]));
                 state.push_back(stoi(lineMetrix[1]));
-                if(!wasStart) {
-                    if(state[0]<0|| state[1]<0||state[0]>this->metrix.size()
-                        || state[1]>this->metrix[state[0]].size()){
+                if (!wasStart) {
+                    if (state[0] < 0 || state[1] < 0 || state[0] > this->metrix.size()
+                        || state[1] > this->metrix[state[0]].size()) {
                         throw "not valid exit state";
                     }
-                    wasStart=true;
+                    this->matrixStr += buffer;
+                    wasStart = true;
                     this->start.setState(state);
                     state.clear();
-                }else{
-                    if(state[0]<0 || state[1]<0 || state[0]>this->metrix.size()
-                        || state[1]>this->metrix[state[0]].size()){
+                } else {
+                    if (state[0] < 0 || state[1] < 0 || state[0] > this->metrix.size()
+                        || state[1] > this->metrix[state[0]].size()) {
                         throw "not valid exit state";
                     }
-                    wasExit=true;
+                    this->matrixStr += buffer;
+                    wasExit = true;
                     this->exit.setState(state);
                     state.clear();
                 }
             }
-        }else{
-            afterEnd=true;
+        } else {
+            afterEnd = true;
         }
 
     }
-
-    this->searcher->search(new MetrixSearchable <vector<int>>(this->metrix,this->start,this->exit));
-
+    if (!this->cm->isProblemExist(this->matrixStr)) {
+        string solution = this->searcher->search(
+                new MetrixSearchable<vector<int>>(this->metrix, this->start, this->exit, this->matrixStr));
+        this->cm->saveSolution(this->matrixStr, solution);
+    } else {
+        this->writeTheSolution(clientId, this->matrixStr.c_str());
+    }
 }
 
-vector<string> MyClientHandler::split(string line){
+
+vector<string> MyClientHandler::split(string line) {
     size_t pos = 0;
     int i = 0;
     vector<string> details;
@@ -82,16 +92,27 @@ vector<string> MyClientHandler::split(string line){
 void MyClientHandler::addLineToMetrix(vector<string> line, int iCounter) {
     int temp;
     vector<int> pos;
-    for(int j=0;j<line.size();++j){
-        if(strcmp(line[j].c_str(),"-1") == 0){
-          temp=-1;
-        }else {
+    for (int j = 0; j < line.size(); ++j) {
+        if (strcmp(line[j].c_str(), "-1") == 0) {
+            temp = -1;
+        } else {
             temp = stoi(line[j]);
         }
         pos.push_back(iCounter);
         pos.push_back(j);
-        State<vector<int>> *myState=new State<vector<int>>(pos,temp,false);
+        State<vector<int>> *myState = new State<vector<int>>(pos, temp, false);
         this->metrix[iCounter].push_back(myState);
         pos.clear();
     }
 }
+
+void MyClientHandler::writeTheSolution(int id, const char* problem) {
+    string solution = this->cm->getSolution(problem);
+    ssize_t n = write(id, solution.c_str(), 1024);
+
+    if (n < 0) {
+        perror("ERROR writing to socket");
+        //exit(1);
+    }
+}
+
