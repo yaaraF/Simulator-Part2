@@ -14,6 +14,7 @@ class MetrixSearchable: public Searchable<T> {
     State<T> start;
     State<T> end;
 
+
 public:
     virtual State <T>* getInitalState() {
        vector<int> temp = this->start.getState();
@@ -120,7 +121,6 @@ public:
 
     MetrixSearchable(const vector<vector<State<vector<int>>*>> &metrix, const State<T> &start, const State<T> &end)
             : metrix(metrix), start(start), end(end) {}
-
 
 
 };

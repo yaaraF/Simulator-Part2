@@ -11,11 +11,11 @@ using namespace std;
 
 template <class T>
 class BFS:public Searcher<T> {
-
+int nodeThetElevated = 0 ;
 public:
     virtual vector<string> search(Searchable<T> *searchable);
     virtual int getNumberOfNodeElevatde(){
-        return  4;
+        return this->nodeThetElevated ;
     }
 
 
@@ -50,6 +50,7 @@ vector<string> BFS<T>::search(Searchable< T> *searchable) {
         }
         //cout << current << " ";
         queue.pop_front();
+        this->nodeThetElevated+=1;
 
         // Get all adjacent vertices of the dequeued
         // vertex s. If a adjacent has not been visited,
