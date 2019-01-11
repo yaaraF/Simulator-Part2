@@ -9,7 +9,7 @@
 
 using namespace std;
 
-void MyClientHandler::handlerClient(int clientId) {
+ void MyClientHandler::handlerClient(int clientId) {
     int clilen;
     ssize_t n;
     vector<string> lineMetrix;
@@ -32,8 +32,8 @@ void MyClientHandler::handlerClient(int clientId) {
 
         if (strcmp(buffer, "end") != 0) {
             if (!afterEnd) {
-                this->matrixStr += buffer;
-                this->matrixStr+="$";
+                matrixStr += buffer;
+                matrixStr+="$";
                 lineMetrix = split(buffer);
                 addLineToMetrix(lineMetrix, countLine);
                 countLine++;
@@ -42,22 +42,22 @@ void MyClientHandler::handlerClient(int clientId) {
                 state.push_back(stoi(lineMetrix[0]));
                 state.push_back(stoi(lineMetrix[1]));
                 if (!wasStart) {
-                    if (state[0] < 0 || state[1] < 0 || state[0] > this->metrix.size()
-                        || state[1] > this->metrix[state[0]].size()) {
+                    if (state[0] < 0 || state[1] < 0 || state[0] > this->matrix.size()
+                        || state[1] > matrix[state[0]].size()) {
                         throw "not valid exit state";
                     }
-                    this->matrixStr += buffer;
+                    matrixStr += buffer;
                     wasStart = true;
-                    this->start.setState(state);
+                    start.setState(state);
                     state.clear();
                 } else {
-                    if (state[0] < 0 || state[1] < 0 || state[0] > this->metrix.size()
-                        || state[1] > this->metrix[state[0]].size()) {
+                    if (state[0] < 0 || state[1] < 0 || state[0] > this->matrix.size()
+                        || state[1] > matrix[state[0]].size()) {
                         throw "not valid exit state";
                     }
-                    this->matrixStr += buffer;
+                    matrixStr += buffer;
                     wasExit = true;
-                    this->exit.setState(state);
+                    exit.setState(state);
                     state.clear();
                 }
             }
@@ -66,12 +66,12 @@ void MyClientHandler::handlerClient(int clientId) {
         }
 
     }
-    if (!this->cm->isProblemExist(this->matrixStr)) {
-        string solution = this->searcher->search(
-                new MetrixSearchable<vector<int>>(this->metrix, this->start, this->exit, this->matrixStr));
-        this->cm->saveSolution(this->matrixStr, solution);
+    if (!cm->isProblemExist(matrixStr)) {
+        string solution = searcher->search(
+                new MetrixSearchable<vector<int>>(matrix, start,exit, matrixStr));
+        cm->saveSolution(matrixStr, solution);
     } else {
-        this->writeTheSolution(clientId, this->matrixStr.c_str());
+       writeTheSolution(clientId, this->matrixStr.c_str());
     }
 }
 
@@ -101,13 +101,13 @@ void MyClientHandler::addLineToMetrix(vector<string> line, int iCounter) {
         pos.push_back(iCounter);
         pos.push_back(j);
         State<vector<int>> *myState = new State<vector<int>>(pos, temp, false);
-        this->metrix[iCounter].push_back(myState);
+        matrix[iCounter].push_back(myState);
         pos.clear();
     }
 }
 
 void MyClientHandler::writeTheSolution(int id, const char* problem) {
-    string solution = this->cm->getSolution(problem);
+    string solution = cm->getSolution(problem);
     ssize_t n = write(id, solution.c_str(), 1024);
 
     if (n < 0) {
@@ -115,4 +115,3 @@ void MyClientHandler::writeTheSolution(int id, const char* problem) {
         //exit(1);
     }
 }
-

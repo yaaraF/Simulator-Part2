@@ -6,7 +6,7 @@
 #include <cstring>
 
 void MyParallelServer::open(int port, ClientHandler *cH) {
-    int sockfd ,portno;
+    int sockfd, portno;
     struct sockaddr_in serv_addr;
 
     /* First call to socket() function */
@@ -16,7 +16,8 @@ void MyParallelServer::open(int port, ClientHandler *cH) {
         perror("ERROR opening socket");
         exit(1);
     }
-    this->serverfd = sockfd;
+    this->passingData->sockfd = sockfd;
+    this->passingData->clientHandler=cH;
 
     /* Initialize socket structure */
     bzero((char *) &serv_addr, sizeof(serv_addr));
@@ -32,54 +33,50 @@ void MyParallelServer::open(int port, ClientHandler *cH) {
         exit(1);
     }
 
-    //listenToClient(this->serverfd,cH);
-    thread thread1(threadManager, this->serverfd,cH);
-
-}
-
-void MyParallelServer::stop() {
-
-}
-
-void MyParallelServer::threadManager(int sockfd, ClientHandler *cH) {
     struct sockaddr_in cli_addr;
     int clilen, cliSock;
+    listen(sockfd, 1);
+    clilen = sizeof(cli_addr);
 
-/*    while (!(params->shouldStop)){
-        clientSocketVal = ::accept(params->sockServer, (struct sockaddr *) &client_sock, (socklen_t *) &clilen);
-        params->sockClient = clientSocketVal;
-        if (params->sockClient < 0) {
-            throw invalid_argument("connection with client failed");
-        }
-        int valread = read( clientSocketVal , buffer, 1024);
-        printf("%s\n",buffer );
-        send(clientSocketVal , hello , strlen(hello) , 0 );
-        printf("Hello message sent\n");
-        //args->getClient()->handleClient(&socketRead,&socketWriter);
-        pthread_t threadId;
-        pthread_create(&threadId, nullptr, &handleClient, params);
-    }
+    timeval timeout;
+    timeout.tv_sec = 10;
+    setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *) &timeout, sizeof(timeout));
 
     while (true) {
-        listen(sockfd, 1);
-        clilen = sizeof(cli_addr);
-        timeval timeout;
-        timeout.tv_sec = 20;
-        timeout.tv_usec = 0;
-        setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout));
+
         // Accept actual connection from the client
-        cliSock = accept(sockfd, (struct sockaddr *) &cli_addr,
-                         (socklen_t *) &clilen);
-        if (cliSock < 0)	{
-            if (errno == EWOULDBLOCK)	{
-                cout << "timeout!" << endl;
-                exit(2);
-            }	else	{
-                perror("other error");
-                exit(3);
+        cliSock = accept(sockfd, (struct sockaddr *) &cli_addr, (socklen_t *) &clilen);
+        if (cliSock < 0) {
+            if (errno == EWOULDBLOCK) {
+                cout << "TimeOut!" << endl;
+                //stop();
+            } else {
+                perror("ERROR on accept");
+                exit(1);
             }
         }
-        //TODO THREAD-problem with static.
-      //  thread thread1(MyClientHandler::handlerClient, sockfd);
-    }*/
+        pthread_t pthread;
+        if(pthread_create(&pthread, nullptr,MyParallelServer::threadManager,passingData)!=0){
+        perror("thread failed");
+        }
+        this->threads.push_back(pthread);
+    }
+
+
+    }
+
+void *MyParallelServer::threadManager(void *data) {
+      struct dataPass *passingData = (struct dataPass *) data;
+      passingData->clientHandler->handlerClient(passingData->sockfd);
+    }
+
+void MyParallelServer::stop() {
+    for(int i=0;i<this->threads.size();++i){
+        pthread_join(this->threads[i],NULL);
+        //delete(this->threads[i]);
+    }
 }
+
+
+
+
