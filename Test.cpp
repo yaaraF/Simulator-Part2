@@ -5,6 +5,8 @@
 #include "Test.h"
 #include "BFS.h"
 #include "DFS.h"
+#include "BestFirstSearche.h"
+#include "SeracherExtend.h"
 
 using namespace std;
 
@@ -78,7 +80,8 @@ void Test::handlerClient(int clientId) {
 
     }
 
-   Searcher<vector<int>> *searcher = new DFS<vector<int>>();
+  SearcherExtend<vector<int>> *searcherExtend = new BestFirstSearch<vector<int>>();
+   Searcher<vector<int>> *searcher = searcherExtend;
     Searchable<vector<int>>* mat = new MetrixSearchable<vector<int>>(this->metrix,this->start,this->exit,this->matrixStr);
     State<vector<int>> *begin = mat->getInitalState();
    cout<<begin->getState()[0]<<begin->getState()[1]<<endl;
@@ -151,6 +154,26 @@ void Test::writeTheSolution(int id, const char* problem) {
 
 Test::Test() {
     this->cm=new FileCacheManager<string,string>();
+}
+
+void Test::checkRQ() {
+
+    MyPriorityQueue<int> *myPriorityQueue = new MyPriorityQueue<int>();
+    State<int> *first = new State<int>(1,0,false);
+    State<int> *second = new State<int>(2,0,false);
+    second->setPathCost(8);
+    State<int> *thired = new State<int>(3,0,false);
+    thired->setPathCost(-1);
+    //State<int> *first = new State<int>(1,0,false);
+    myPriorityQueue->add(first);
+    myPriorityQueue->add(second);
+    myPriorityQueue->add(thired);
+   myPriorityQueue->updatePriority(second,thired);
+    myPriorityQueue->print();
+
+
+
+
 }
 
 

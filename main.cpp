@@ -5,6 +5,6 @@
 
 int main() {
    Test test;
-   test.handlerClient(3);
+   test.checkRQ();
     return 0;
 }

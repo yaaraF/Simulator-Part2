@@ -45,7 +45,7 @@ void MyParallelServer::threadManager(int sockfd, ClientHandler *cH) {
     struct sockaddr_in cli_addr;
     int clilen, cliSock;
 
-    while (!(params->shouldStop)){
+/*    while (!(params->shouldStop)){
         clientSocketVal = ::accept(params->sockServer, (struct sockaddr *) &client_sock, (socklen_t *) &clilen);
         params->sockClient = clientSocketVal;
         if (params->sockClient < 0) {
@@ -81,5 +81,5 @@ void MyParallelServer::threadManager(int sockfd, ClientHandler *cH) {
         }
         //TODO THREAD-problem with static.
       //  thread thread1(MyClientHandler::handlerClient, sockfd);
-    }
+    }*/
 }

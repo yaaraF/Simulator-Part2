@@ -11,6 +11,7 @@
 #include "State.h"
 #include "Searcher.h"
 #include "MetrixSearchable.h"
+#include "MyPriorityQueue.h"
 
 class Test :public ClientHandler {
     CacheManager<string,string> *cm;
@@ -28,6 +29,7 @@ public:
         void addLineToMetrix(vector<string> line,int counter);
 
     void writeTheSolution(int id, const char* problem);
+    void checkRQ();
 
 };
 
