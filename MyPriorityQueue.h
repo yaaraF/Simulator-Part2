@@ -87,6 +87,10 @@ public:
         }
     }
 
+   bool empty(){
+      return this->pq.empty();
+    }
+
 
 };
 #endif //PART2_MYPRIORITYQUEUE_H

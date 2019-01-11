@@ -13,12 +13,15 @@ template <class T>
 class BestFirstSearch:public SearcherExtend<T>{
 
 public:
-    virtual vector<string> search(Searchable<T> *searchable) {
-        this->openList.add(searchable->getInitialState());
+    virtual string search(Searchable<T> *searchable) {
+        State<T>* first = searchable->getInitalState();
+        this->openList->add(first);
 
         unordered_set<State<T>*> closed;
+        typename unordered_set<State<T>*>::iterator itOnClosed;
         State<T>* goal = searchable->getGoalState();
-        while (!this->openList.empty()) {
+
+        while (!this->openList->empty()) {
 
             State<T>* n = this->openList->popFromthePq();
             closed.insert(n);
@@ -27,27 +30,38 @@ public:
                 //return;
             }
             this->evluetedNode+=1;
+
             typename vector<State<T>*>::iterator iterator1;
             vector<State<T>*> successors = searchable->getAllPossibleStates(n);
 
             iterator1 = successors.begin();
 
             for (;iterator1!=successors.end();++iterator1) {
-                double currPath = n->getPathCost() + iterator1->getCost();
+                State<T> *it = (*iterator1);
 
-                if (closed.find(iterator1) != successors.end() && !this->openList.contains(iterator1)) {
-                    iterator1->setCameFrom(n);
-                    iterator1->setPathCost(currPath);
-                    this->openList.add(iterator1);
-                } else if (currPath < iterator1->getPathCost()) {
-                    if (!this->openList.contains(iterator1)) {
-                        this->openList.add(iterator1);
+                double currPath = n->getPathCost() + it->getCost();
+                itOnClosed = closed.find(it);
+
+                if (itOnClosed ==closed.end() && !this->openList->contains(it)) {
+                    it->setCameFrom(n);
+                    it->setPathCost(currPath);
+                    this->openList->add(it);
+                } else if (currPath < it->getPathCost()) {
+                    if (!this->openList->contains(it)) {
+                        this->openList->add(it);
                     } else {
-                        this->openList.updatePriority(iterator1);
+                        this->openList->updatePriority(it,n);
                     }
                 }
             }
+
+
         }
+
+        vector<State<T>*> path = this->ThePath(searchable->getGoalState());
+
+        string solution = searchable->WhereToGo(path);
+        return solution;
     }
 
     virtual int getNumberOfNodeElevatde() {

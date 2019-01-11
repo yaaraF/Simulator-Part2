@@ -80,8 +80,8 @@ void Test::handlerClient(int clientId) {
 
     }
 
-  SearcherExtend<vector<int>> *searcherExtend = new BestFirstSearch<vector<int>>();
-   Searcher<vector<int>> *searcher = searcherExtend;
+   Searcher<vector<int>> *searcher = new BestFirstSearch<vector<int>>();
+
     Searchable<vector<int>>* mat = new MetrixSearchable<vector<int>>(this->metrix,this->start,this->exit,this->matrixStr);
     State<vector<int>> *begin = mat->getInitalState();
    cout<<begin->getState()[0]<<begin->getState()[1]<<endl;
@@ -158,7 +158,8 @@ Test::Test() {
 
 void Test::checkRQ() {
 
-    MyPriorityQueue<int> *myPriorityQueue = new MyPriorityQueue<int>();
+
+    /*MyPriorityQueue<int> *myPriorityQueue = new
     State<int> *first = new State<int>(1,0,false);
     State<int> *second = new State<int>(2,0,false);
     second->setPathCost(8);
@@ -169,7 +170,7 @@ void Test::checkRQ() {
     myPriorityQueue->add(second);
     myPriorityQueue->add(thired);
    myPriorityQueue->updatePriority(second,thired);
-    myPriorityQueue->print();
+    myPriorityQueue->print();*/
 
 
 

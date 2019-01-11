@@ -10,7 +10,8 @@
 #include "State.h"
 template <class T>
 class SearcherExtend:public Searcher<T>{
-    MyPriorityQueue<State<T>>* openList;
+protected:
+    MyPriorityQueue<T>* openList;
     int evluetedNode;
 public:
 
@@ -19,6 +20,7 @@ public:
         this->evluetedNode = 0 ;
 
     }
+
 
     virtual string search(Searchable<T> *searchable) = 0;
     virtual int getNumberOfNodeElevatde() = 0;
