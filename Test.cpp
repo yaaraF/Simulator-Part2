@@ -90,14 +90,18 @@ void Test::handlerClient(int clientId) {
 
    cout<<end->getState()[0]<<end->getState()[1]<<endl;
     cout<<begin->getState()[0]<<begin->getState()[1]<<endl;
+
+
     vector<State<vector<int>>*> close = mat->getAllPossibleStates(begin);
     string solution;
-    if (!this->cm->isProblemExist(this->matrixStr)) {
-        solution = searcher->search(mat);
+    solution = searcher->search(mat);
+
+    /*if (!this->cm->isProblemExist(this->matrixStr)) {
+
         this->cm->saveSolution(this->matrixStr, solution);
     } else {
         this->writeTheSolution(clientId, this->matrixStr.c_str());
-    }
+    }*/
     //string hello = searcher->search(mat);
    cout<<solution<<endl;
 
