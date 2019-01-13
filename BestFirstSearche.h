@@ -16,6 +16,7 @@ public:
     virtual string search(Searchable<T> *searchable) {
         State<T>* first = searchable->getInitalState();
         this->openList->add(first);
+        first->setPathCost(first->getCost());
 
         unordered_set<State<T>*> closed;
         typename unordered_set<State<T>*>::iterator itOnClosed;
@@ -26,10 +27,9 @@ public:
             State<T>* n = this->openList->popFromthePq();
             closed.insert(n);
             if (n == goal) {
-                // TODO: end algorithm. return solution
-                //return;
+                break;
             }
-            this->evluetedNode+=1;
+            this->evluetedNode++;
 
             typename vector<State<T>*>::iterator iterator1;
             vector<State<T>*> successors = searchable->getAllPossibleStates(n);
