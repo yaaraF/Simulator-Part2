@@ -7,10 +7,13 @@
 #include <vector>
 #include "MyClientHandler.h"
 #include <mutex>
+#include "FileCacheManager.h"
 
 using namespace std;
 
  void MyClientHandler::handlerClient(int clientId) {
+     this->cm=new FileCacheManager<string,string>();
+     this->searcher=new BFS<vector<int>>();
      string matrixStr;
      cout<<"im hereee" <<endl;
      vector<vector<State<vector<int>>*>> matrix;
@@ -90,6 +93,7 @@ using namespace std;
         string solution = searcher->search(
                 new MetrixSearchable<vector<int>>(matrix, start,exit, matrixStr));
         cm->saveSolution(matrixStr, solution);
+        cout<<"my solution: "<<solution<<endl;
     } else {
         cout<<"$ 11"<<endl;
        writeTheSolution(clientId, matrixStr.c_str());
