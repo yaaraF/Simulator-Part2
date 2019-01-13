@@ -87,11 +87,16 @@ public:
         State::state = state;
     }
 
-    /*bool operator == (const State<vector<int>>* &b) const{
-        vector<int > a = this->getState();
-        vector<int> c = b->getState();
-        return a[0]== c[0]&& a[1] == c[1];
-    }*/
+    int getI(){
+    return this->state[0];
+    }
+
+    int getJ(){
+    return this->state[1];
+}
+
+
+
 
 
 };

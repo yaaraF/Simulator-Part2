@@ -80,7 +80,7 @@ void Test::handlerClient(int clientId) {
 
     }
 
-   Searcher<vector<int>> *searcher = new BestFirstSearch<vector<int>>();
+   Searcher<vector<int>> *searcher = new AStar<vector<int>>();
 
     Searchable<vector<int>>* mat = new MetrixSearchable<vector<int>>(this->metrix,this->start,this->exit,this->matrixStr);
     State<vector<int>> *begin = mat->getInitalState();

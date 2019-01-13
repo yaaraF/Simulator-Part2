@@ -12,6 +12,7 @@
 #include "Searcher.h"
 #include "MetrixSearchable.h"
 #include "MyPriorityQueue.h"
+#include "AStar.h"
 
 class Test :public ClientHandler {
     CacheManager<string,string> *cm;
