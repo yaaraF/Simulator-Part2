@@ -20,7 +20,7 @@ class AStar:public Searcher<T>{
     }
 
     string tempMyAStar(Searchable<T> *searchable){
-
+        int k= 0 ;
         vector<State<T>*> close;
         State<T>* goal = searchable->getGoalState();
         State<T>* start = searchable->getInitalState();
@@ -30,7 +30,9 @@ class AStar:public Searcher<T>{
         this->open1.push_back(start);
 
         while(!this->open1.empty()){
+
             State<T>* current = this->lowestVal(goal);
+            current->setIsVisted(true);
 
             close.push_back(current);
             this->nodeThatEleveted++;
@@ -43,6 +45,10 @@ class AStar:public Searcher<T>{
             while (!adj.empty()){
                 State<T>* temp = adj.back();
                 adj.pop_back();
+
+                if(temp ->isIsVisted()){
+                    continue;
+                }
 
                 double pathFromCurrent = current->getPathCost()+temp->getCost();
 
