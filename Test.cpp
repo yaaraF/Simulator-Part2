@@ -7,6 +7,10 @@
 #include "DFS.h"
 #include "BestFirstSearche.h"
 #include "SeracherExtend.h"
+#include "stringReverser.h"
+#include"MyClientHandler.h"
+#include "MyParallelServer.h"
+#include "CacheManager.h"
 
 using namespace std;
 
@@ -174,6 +178,18 @@ void Test::checkRQ() {
 
 
 
+
+}
+
+void Test::testParllel() {
+    Server *testServer=new MyParallelServer();
+    CacheManager<string,string> *cacheManager=new FileCacheManager<string,string>();
+    Solver <string,string> *rev=new stringReverser();
+    ClientHandler *clientHandler=new MyClientHandler();
+    testServer->open(5400,clientHandler);
+    cout<<"enterToContinue"<<endl;
+    cin.ignore();
+    testServer->stop();
 
 }
 

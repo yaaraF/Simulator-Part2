@@ -12,20 +12,20 @@
 #include "Searcher.h"
 #include "MetrixSearchable.h"
 
-class MyClientHandler:  ClientHandler {
+class MyClientHandler: public ClientHandler {
 public:
     //Solver<string,string> *solver;
     CacheManager<string,string> *cm;
    Searcher<vector<int>> * searcher;
-    vector<vector<State<vector<int>>*>> matrix;
+   /* vector<vector<State<vector<int>>*>> matrix;
     State<vector<int>> start;
-    State<vector<int>> exit;
+    State<vector<int>> exit;*/
     string matrixStr;
 
 public:
     void handlerClient(int clientId);
     vector<string> split(string line);
-    void addLineToMetrix(vector<string> line,int counter);
+    void addLineToMetrix(vector<string> line,int counter,vector<vector<State<vector<int>>*>> &matrix);
     void writeTheSolution(int id,const char* problem);
 };
 
