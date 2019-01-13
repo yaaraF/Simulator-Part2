@@ -6,10 +6,15 @@
 #include <cstring>
 #include <vector>
 #include "MyClientHandler.h"
+#include <mutex>
 
 using namespace std;
 
  void MyClientHandler::handlerClient(int clientId) {
+     cout<<"im hereee" <<endl;
+     vector<vector<State<vector<int>>*>> matrix;
+     State<vector<int>> start;
+     State<vector<int>> exit;
     int clilen;
     ssize_t n;
     vector<string> lineMetrix;
@@ -18,7 +23,7 @@ using namespace std;
     bool afterEnd = false;
     bool wasStart = false;
     bool wasExit = false;
-
+     cout<<"$ 0"<<endl;
     while (!wasExit) {
         char buffer[1000];
         // If connection is established then start communicating
@@ -35,14 +40,14 @@ using namespace std;
                 matrixStr += buffer;
                 matrixStr+="$";
                 lineMetrix = split(buffer);
-                addLineToMetrix(lineMetrix, countLine);
+                addLineToMetrix(lineMetrix, countLine,matrix);
                 countLine++;
             } else {
                 lineMetrix = split(buffer);
                 state.push_back(stoi(lineMetrix[0]));
                 state.push_back(stoi(lineMetrix[1]));
                 if (!wasStart) {
-                    if (state[0] < 0 || state[1] < 0 || state[0] > this->matrix.size()
+                    if (state[0] < 0 || state[1] < 0 || state[0] > matrix.size()
                         || state[1] > matrix[state[0]].size()) {
                         throw "not valid exit state";
                     }
@@ -51,7 +56,7 @@ using namespace std;
                     start.setState(state);
                     state.clear();
                 } else {
-                    if (state[0] < 0 || state[1] < 0 || state[0] > this->matrix.size()
+                    if (state[0] < 0 || state[1] < 0 || state[0] > matrix.size()
                         || state[1] > matrix[state[0]].size()) {
                         throw "not valid exit state";
                     }
@@ -66,13 +71,20 @@ using namespace std;
         }
 
     }
+     cout<<"$ 2"<<endl;
+    mutex mutex1;
+    mutex1.lock();
+     cout<<"$ 3"<<endl;
     if (!cm->isProblemExist(matrixStr)) {
+        cout<<"$ 4"<<endl;
         string solution = searcher->search(
                 new MetrixSearchable<vector<int>>(matrix, start,exit, matrixStr));
         cm->saveSolution(matrixStr, solution);
     } else {
+        cout<<"$ 5"<<endl;
        writeTheSolution(clientId, this->matrixStr.c_str());
     }
+     mutex1.unlock();
 }
 
 
@@ -89,7 +101,7 @@ vector<string> MyClientHandler::split(string line) {
     return details;
 }
 
-void MyClientHandler::addLineToMetrix(vector<string> line, int iCounter) {
+void MyClientHandler::addLineToMetrix(vector<string> line, int iCounter, vector<vector<State<vector<int>>*>> &matrix) {
     int temp;
     vector<int> pos;
     for (int j = 0; j < line.size(); ++j) {
