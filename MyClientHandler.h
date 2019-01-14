@@ -11,6 +11,7 @@
 #include "State.h"
 #include "Searcher.h"
 #include "MetrixSearchable.h"
+#include "BFS.h"
 
 class MyClientHandler: public ClientHandler {
 public:
@@ -20,7 +21,6 @@ public:
    /* vector<vector<State<vector<int>>*>> matrix;
     State<vector<int>> start;
     State<vector<int>> exit;*/
-    string matrixStr;
 
 public:
     void handlerClient(int clientId);

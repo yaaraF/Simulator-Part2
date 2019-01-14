@@ -7,10 +7,14 @@
 #include <vector>
 #include "MyClientHandler.h"
 #include <mutex>
+#include "FileCacheManager.h"
 
 using namespace std;
 
  void MyClientHandler::handlerClient(int clientId) {
+     this->cm=new FileCacheManager<string,string>();
+     this->searcher=new BFS<vector<int>>();
+     string matrixStr;
      cout<<"im hereee" <<endl;
      vector<vector<State<vector<int>>*>> matrix;
      State<vector<int>> start;
@@ -29,24 +33,30 @@ using namespace std;
         // If connection is established then start communicating
         bzero(buffer, 1000);
         n = read(clientId, buffer, 1000);
+        cout<<"ppp "<<buffer<<endl;
 
         if (n < 0) {
             perror("ERROR reading from socket");
             // exit(1);
         }
+        cout<<"$ 1"<<endl;
 
         if (strcmp(buffer, "end") != 0) {
+            cout<<"$ 2"<<endl;
             if (!afterEnd) {
+                cout<<"$ 3"<<endl;
                 matrixStr += buffer;
                 matrixStr+="$";
                 lineMetrix = split(buffer);
                 addLineToMetrix(lineMetrix, countLine,matrix);
                 countLine++;
             } else {
+                cout<<"$ 4"<<endl;
                 lineMetrix = split(buffer);
                 state.push_back(stoi(lineMetrix[0]));
                 state.push_back(stoi(lineMetrix[1]));
                 if (!wasStart) {
+                    cout<<"$ 5"<<endl;
                     if (state[0] < 0 || state[1] < 0 || state[0] > matrix.size()
                         || state[1] > matrix[state[0]].size()) {
                         throw "not valid exit state";
@@ -55,11 +65,13 @@ using namespace std;
                     wasStart = true;
                     start.setState(state);
                     state.clear();
+                    cout<<"$ 6"<<endl;
                 } else {
                     if (state[0] < 0 || state[1] < 0 || state[0] > matrix.size()
                         || state[1] > matrix[state[0]].size()) {
                         throw "not valid exit state";
                     }
+                    cout<<"$ 7"<<endl;
                     matrixStr += buffer;
                     wasExit = true;
                     exit.setState(state);
@@ -71,19 +83,19 @@ using namespace std;
         }
 
     }
-     cout<<"$ 2"<<endl;
+    cout<<matrixStr<<endl;
+     cout<<"$ 8"<<endl;
     mutex mutex1;
     mutex1.lock();
-     cout<<"$ 3"<<endl;
+     cout<<"$ 9"<<endl;
     if (!cm->isProblemExist(matrixStr)) {
-        cout<<"$ 4"<<endl;
+        cout<<"$ 10"<<endl;
         string solution = searcher->search(
                 new MetrixSearchable<vector<int>>(matrix, start,exit, matrixStr));
         cm->saveSolution(matrixStr, solution);
-    } else {
-        cout<<"$ 5"<<endl;
-       writeTheSolution(clientId, this->matrixStr.c_str());
+        cout<<"my solution: "<<solution<<endl;
     }
+     writeTheSolution(clientId, matrixStr.c_str());
      mutex1.unlock();
 }
 
@@ -102,25 +114,36 @@ vector<string> MyClientHandler::split(string line) {
 }
 
 void MyClientHandler::addLineToMetrix(vector<string> line, int iCounter, vector<vector<State<vector<int>>*>> &matrix) {
+    cout<<"in add line"<<endl;
     int temp;
     vector<int> pos;
+    vector<State<vector<int>>*> vecLine;
     for (int j = 0; j < line.size(); ++j) {
+        cout<<"in add line "<<j<<endl;
         if (strcmp(line[j].c_str(), "-1") == 0) {
+            cout<<"in -1"<<endl;
             temp = -1;
         } else {
+            cout<<"in add line: "<<line[j]<<endl;
             temp = stoi(line[j]);
         }
+        cout<<"in add line after if else"<<endl;
         pos.push_back(iCounter);
         pos.push_back(j);
+        cout<<"in add line i did push"<<endl;
         State<vector<int>> *myState = new State<vector<int>>(pos, temp, false);
-        matrix[iCounter].push_back(myState);
+        cout<<"in add line state vector"<<endl;
+        vecLine.push_back(myState);
+        cout<<"in add line before clear"<<endl;
         pos.clear();
+        cout<<"in add line after"<<endl;
     }
+    matrix.push_back(vecLine);
 }
 
 void MyClientHandler::writeTheSolution(int id, const char* problem) {
     string solution = cm->getSolution(problem);
-    ssize_t n = write(id, solution.c_str(), 1024);
+    ssize_t n = write(id, solution.c_str(), solution.size());
 
     if (n < 0) {
         perror("ERROR writing to socket");
