@@ -33,13 +33,13 @@ public:
             current = stack.top();
             stack.pop();
 
-            this->nodeThetElevated++;
+
 
 
             if(current->Equals(goal)){
                 break;
             }
-
+            this->nodeThetElevated++;
             // Stack may contain same vertex twice. So
             // we need to print the popped item only
             // if it is not visited.
@@ -54,7 +54,7 @@ public:
             for(; it!= canGo.end() ;++it){
 
                 State<T>* temp = (*it);
-                if( !temp->isIsVisted()) {
+                if(!temp->isIsVisted()) {
                     temp->setIsVisted(true);
                     temp->setCameFrom(current);
                     stack.push(temp);
@@ -62,6 +62,9 @@ public:
             }
 
         }
+
+        cout<<"Dfs"<<endl;
+        cout<<"node:"<<this->nodeThetElevated<<endl;
 
         vector<State<T>*> path = this->ThePath(searchable->getGoalState());
 

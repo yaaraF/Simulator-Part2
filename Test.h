@@ -32,6 +32,7 @@ public:
     void writeTheSolution(int id, const char* problem);
     void checkRQ();
     void testParllel();
+    void EmpiryTrail();
 
 };
 
