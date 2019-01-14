@@ -94,10 +94,8 @@ using namespace std;
                 new MetrixSearchable<vector<int>>(matrix, start,exit, matrixStr));
         cm->saveSolution(matrixStr, solution);
         cout<<"my solution: "<<solution<<endl;
-    } else {
-        cout<<"$ 11"<<endl;
-       writeTheSolution(clientId, matrixStr.c_str());
     }
+     writeTheSolution(clientId, matrixStr.c_str());
      mutex1.unlock();
 }
 
@@ -145,7 +143,7 @@ void MyClientHandler::addLineToMetrix(vector<string> line, int iCounter, vector<
 
 void MyClientHandler::writeTheSolution(int id, const char* problem) {
     string solution = cm->getSolution(problem);
-    ssize_t n = write(id, solution.c_str(), 1024);
+    ssize_t n = write(id, solution.c_str(), solution.size());
 
     if (n < 0) {
         perror("ERROR writing to socket");

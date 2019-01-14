@@ -41,10 +41,13 @@ void MyParallelServer::open(int port, ClientHandler *cH) {
     listen(sockfd, SOMAXCONN);
     clilen = sizeof(cli_addr);
 
-   timeval timeout;
-   timeout.tv_sec = 10000;
-   setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *) &timeout, sizeof(timeout));
+   /*timeval timeout;
+   timeout.tv_sec = 1;
+   setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *) &timeout, sizeof(timeout));*/
    while(true){
+       timeval timeout;
+       timeout.tv_sec = 1;
+       setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *) &timeout, sizeof(timeout));
        // Accept actual connection from the client
        cliSock = accept(sockfd, (struct sockaddr *) &cli_addr, (socklen_t *) &clilen);
        this->passingData->sockfd = cliSock;
