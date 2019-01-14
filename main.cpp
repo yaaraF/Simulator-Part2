@@ -5,7 +5,9 @@
 
 int main() {
    Test test;
-   //test.handlerClient(7);
-test.testParllel();
+  test.EmpiryTrail();
+
+  test.handlerClient(7);
+
     return 0;
 }

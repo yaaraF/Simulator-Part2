@@ -26,6 +26,7 @@ public:
 
             State<T>* n = this->openList->popFromthePq();
             closed.insert(n);
+
             if (n == goal) {
                 break;
             }
@@ -59,6 +60,10 @@ public:
         }
 
         vector<State<T>*> path = this->ThePath(searchable->getGoalState());
+
+        cout<<"best"<<endl;
+        cout<<"node:"<<this->evluetedNode<<endl;
+        cout<<goal->getPathCost()<<endl;
 
         string solution = searchable->WhereToGo(path);
         return solution;

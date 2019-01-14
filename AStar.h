@@ -35,11 +35,12 @@ class AStar:public Searcher<T>{
             current->setIsVisted(true);
 
             close.push_back(current);
-            this->nodeThatEleveted++;
+
 
             if(current->Equals(goal)){
                 break;
             }
+            this->nodeThatEleveted++;
 
             vector<State<T>*> adj = searchable->getAllPossibleStates(current);
             while (!adj.empty()){
@@ -61,7 +62,7 @@ class AStar:public Searcher<T>{
                    if(temp->getPathCost()<pathFromCurrent) {
                        continue;
                    }
-                   this->moveToOpen(close,temp);
+                  // this->moveToOpen(close,temp);
 
                }else{
                    this->open1.push_back(temp);
@@ -74,6 +75,10 @@ class AStar:public Searcher<T>{
             }
 
         }
+        cout<<"Astar"<<endl;
+        cout<<"node:"<<this->nodeThatEleveted<<endl;
+        cout<<goal->getPathCost()<<endl;
+
         vector<State<T>*> path = this->ThePath(searchable->getGoalState());
 
         string solution =  searchable->WhereToGo(path);

@@ -7,6 +7,8 @@
 
 #include "Searcher.h"
 #include <list>
+#include <iostream>
+
 using namespace std;
 
 template <class T>
@@ -43,13 +45,15 @@ public:
         while (!queue.empty()) {
             // Dequeue a vertex from queue and print it
             current = queue.front();
+            queue.pop_front();
             //if we found a path
+
             if (current->Equals(endNode)) {
                 break;
             }
             //cout << current << " ";
-            queue.pop_front();
-            this->nodeThetElevated += 1;
+            this->nodeThetElevated++;
+
 
             // Get all adjacent vertices of the dequeued
             // vertex s. If a adjacent has not been visited,
@@ -68,6 +72,10 @@ public:
             }
 
         }
+
+        cout<<"BFS"<<endl;
+        cout<<"node:"<<this->nodeThetElevated<<endl;
+
 
         vector<State<T> *> path = this->ThePath(searchable->getGoalState());
 

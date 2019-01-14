@@ -12,6 +12,7 @@
 #include "MyParallelServer.h"
 #include "CacheManager.h"
 
+
 using namespace std;
 
 void Test::handlerClient(int clientId) {
@@ -84,30 +85,30 @@ void Test::handlerClient(int clientId) {
 
     }
 
-   Searcher<vector<int>> *searcher = new AStar<vector<int>>();
+
+
+
+
+
+
 
     Searchable<vector<int>>* mat = new MetrixSearchable<vector<int>>(this->metrix,this->start,this->exit,this->matrixStr);
-    State<vector<int>> *begin = mat->getInitalState();
-   cout<<begin->getState()[0]<<begin->getState()[1]<<endl;
-   State<vector<int>> *end = mat->getGoalState();
+    /*Searcher<vector<int>> *Bfs = new BFS<vector<int>>();
+    string sol;
+    sol = Bfs->search(mat);*/
 
+   /* Searcher<vector<int>> *Dfs = new DFS<vector<int>>();
+    string sol;
+    sol = Dfs->search(mat);*/
 
-   cout<<end->getState()[0]<<end->getState()[1]<<endl;
-    cout<<begin->getState()[0]<<begin->getState()[1]<<endl;
+    /*Searcher<vector<int>> *Best = new BestFirstSearch<vector<int>>();
+    string sol;
+    sol = Best->search(mat);*/
 
+   /* Searcher<vector<int>> *astar = new AStar<vector<int>>();
+    string sol;
+    sol = astar->search(mat);*/
 
-    vector<State<vector<int>>*> close = mat->getAllPossibleStates(begin);
-    string solution;
-    solution = searcher->search(mat);
-
-    /*if (!this->cm->isProblemExist(this->matrixStr)) {
-
-        this->cm->saveSolution(this->matrixStr, solution);
-    } else {
-        this->writeTheSolution(clientId, this->matrixStr.c_str());
-    }*/
-    //string hello = searcher->search(mat);
-   cout<<solution<<endl;
 
 
 
@@ -194,6 +195,85 @@ void Test::testParllel() {
     cout<<"enterToContinue"<<endl;
     cin.ignore();
     testServer->stop();
+
+}
+
+void Test::EmpiryTrail() {
+
+    ofstream myFile;
+    myFile.open("matrix.txt");
+
+
+    vector<vector<string>> input;
+    vector<string> inside;
+    //ניסוי אמפירי
+    string res;
+    vector<int> start;
+    vector<int> end;
+    int changeSize = 13;
+    int howMany = 0;
+    int countLine = 0 ;
+
+        // output each array element's value
+        for (int row = 0; row < changeSize; row++) {
+            for (int col = 0; col < changeSize; col++) {
+                int iSecret = random() % 10 + 1;
+                res = to_string(iSecret);
+                inside.push_back(res);
+            }
+            //
+
+            //
+
+            //lineMetrix = split(inside);
+            addLineToMetrix(inside, countLine);
+            countLine++;
+            res.clear();
+            inside.clear();
+        }
+        start.push_back(0);
+        start.push_back(0);
+        this->start.setState(start);
+
+        end.push_back(changeSize-1);
+        end.push_back(changeSize-1);
+
+        this->exit.setState(end);
+
+        for(int j =0 ; j <this->metrix.size();j++){
+            for(int k = 0 ; k < this->metrix[j].size();k++){
+                State<vector<int>>* now = this->metrix[j][k];
+
+                myFile<<now->getCost();
+                myFile<<",";
+            }
+
+            myFile<<"\n";
+
+        }
+
+    /*Searchable<vector<int>>* mat = new MetrixSearchable<vector<int>>(this->metrix,this->start,this->exit,this->matrixStr);
+
+    Searcher<vector<int>> *Bfs = new BFS<vector<int>>();
+    Searcher<vector<int>> *Dfs = new DFS<vector<int>>();
+    Searcher<vector<int>> *Best = new BestFirstSearch<vector<int>>();
+    Searcher<vector<int>> *astar = new AStar<vector<int>>();
+
+    string sol;
+    sol = Bfs->search(mat);
+    sol = Dfs->search(mat);
+    sol = Best->search(mat);
+    sol = astar->search(mat);*/
+
+
+
+
+
+
+
+
+
+
 
 }
 
