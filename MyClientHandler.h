@@ -25,7 +25,7 @@ public:
 public:
     void handlerClient(int clientId);
     vector<string> split(string line);
-    void addLineToMetrix(vector<string> line,int counter,vector<vector<State<vector<int>>*>> &matrix);
+    void createMatrix(vector<vector<string>> lines, vector<vector<State<vector<int>> *>> &matrix);
     void writeTheSolution(int id,const char* problem);
 };
 
