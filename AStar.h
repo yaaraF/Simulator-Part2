@@ -75,13 +75,15 @@ class AStar:public Searcher<T>{
             }
 
         }
-        cout<<"Astar"<<endl;
-        cout<<"node:"<<this->nodeThatEleveted<<endl;
-        cout<<goal->getPathCost()<<endl;
+        string solution;
+        if(!goal->getCameFrom() = NULL){
+           vector<State<T>*> path = this->ThePath(searchable->getGoalState());
+           solution =  searchable->WhereToGo(path);
+       }else{
+            solution = "there is no path";
+        }
 
-        vector<State<T>*> path = this->ThePath(searchable->getGoalState());
 
-        string solution =  searchable->WhereToGo(path);
         return solution;
 
 
