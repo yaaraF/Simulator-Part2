@@ -76,11 +76,12 @@ class AStar:public Searcher<T>{
 
         }
         string solution;
-        if(!goal->getCameFrom() = NULL){
-           vector<State<T>*> path = this->ThePath(searchable->getGoalState());
-           solution =  searchable->WhereToGo(path);
+        if(goal->getCameFrom() == NULL){
+            solution = "-1";
+
        }else{
-            solution = "there is no path";
+            vector<State<T>*> path = this->ThePath(searchable->getGoalState());
+            solution =  searchable->WhereToGo(path);
         }
 
 
