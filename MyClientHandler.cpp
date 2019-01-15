@@ -12,11 +12,11 @@
 using namespace std;
 
 void MyClientHandler::handlerClient(int clientId) {
+    cout<<"in handler client"<<endl;
     this->cm=new FileCacheManager<string,string>();
     this->searcher=new BFS<vector<int>>();
     ssize_t n;
     string matrixStr;
-    cout<<"im hereee" <<endl;
     vector<vector<State<vector<int>>*>> matrix;
     State<vector<int>> start;
     State<vector<int>> exit;
@@ -31,12 +31,11 @@ void MyClientHandler::handlerClient(int clientId) {
         // If connection is established then start communicating
         bzero(buffer, 1000);
         n = read(clientId, buffer, 1000);
-        cout<<"ppp "<<buffer<<endl;
+        cout<<"the buffer: "<<buffer<<endl;
         if (n < 0) {
             perror("ERROR reading from socket");
             // exit(1);
         }
-        cout<<"$ 1"<<endl;
         if (strcmp(buffer, "end") != 0) {
             matrixStr += buffer;
             matrixStr+="$";
@@ -66,11 +65,10 @@ void MyClientHandler::handlerClient(int clientId) {
         }
     }
 
-    cout<<matrixStr<<endl;
-    cout<<"$ 8"<<endl;
+    cout<<"matrixSTR "<<matrixStr<<endl;
     mutex mutex1;
     mutex1.lock();
-    cout<<"$ 9"<<endl;
+    cout<<"i put mutex"<<endl;
     if (!cm->isProblemExist(matrixStr)) {
         cout<<"$ 10"<<endl;
         string solution = searcher->search(
@@ -109,7 +107,7 @@ void MyClientHandler::writeTheSolution(int id, const char* problem) {
 }
 
 void MyClientHandler::createMatrix(vector<vector<string>> lines, vector<vector<State<vector<int>> *>> &matrix) {
-    cout<<"in add line"<<endl;
+    cout<<"creating matrix..."<<endl;
     int temp;
     vector<int> pos;
     vector<State<vector<int>>*> vecLine;
@@ -117,22 +115,15 @@ void MyClientHandler::createMatrix(vector<vector<string>> lines, vector<vector<S
         for(int j=0;j<lines[i].size();++j){
 
             if (strcmp(lines[i][j].c_str(), "-1") == 0) {
-                cout<<"in -1"<<endl;
                 temp = -1;
             } else {
-                cout<<"in add line: "<<lines[i][j]<<endl;
                 temp = stoi(lines[i][j]);
             }
-            cout<<"in add line after if else"<<endl;
             pos.push_back(i);
             pos.push_back(j);
-            cout<<"in add line i did push"<<endl;
             State<vector<int>> *myState = new State<vector<int>>(pos, temp, false);
-            cout<<"in add line state vector"<<endl;
             vecLine.push_back(myState);
-            cout<<"in add line before clear"<<endl;
             pos.clear();
-            cout<<"in add line after"<<endl;
         }
         matrix.push_back(vecLine);
         vecLine.clear();
