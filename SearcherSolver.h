@@ -1,6 +1,4 @@
-//
-// Created by adi on 1/14/19.
-//
+
 
 #ifndef PART2_SEARCHERSOLVER_H
 #define PART2_SEARCHERSOLVER_H
@@ -22,7 +20,7 @@ public:
     }
 
     virtual ~SercherSolver() {
-        delete (this->searcher);
+
     }
 };
 

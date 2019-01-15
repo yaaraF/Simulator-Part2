@@ -1,6 +1,4 @@
-//
-// Created by adi on 1/15/19.
-//
+
 
 #include "RunTheProgram.h"
 
@@ -13,9 +11,6 @@ void RunTheProgram::run(string s) {
     this-> solver = new SercherSolver(searcher);
     this->clientHandler=new MyClientHandler(cacheManager,solver);
     this->par->open(port,clientHandler);
-    /*cout<<"enterToContinue"<<endl;
-    cin.ignore();
-    this->par->stop();*/
 
 }
 

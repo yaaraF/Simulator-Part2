@@ -19,9 +19,11 @@ class Test :public ClientHandler {
 //    Searcher<vector<int>> * searcher;
     vector<vector<State<vector<int>>*>> metrix;
     State<vector<int>> start;
+    Searchable<vector<int>> *searchable;
     State<vector<int>> exit;
     string matrixStr;
 public:
+    virtual ~Test();
 
     Test();
 

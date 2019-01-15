@@ -18,6 +18,10 @@ protected:
    unordered_map<string,string> solutions;
 
 public:
+    virtual ~CacheManager(){
+        this->solutions.clear();
+    }
+
     virtual bool isProblemExist(P problem)=0;
     virtual S getSolution(P problem)=0;
     virtual void saveSolution(P problem, S solution) =0;

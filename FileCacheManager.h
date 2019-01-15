@@ -1,6 +1,3 @@
-//
-// Created by yaara on 1/3/19.
-//
 
 #ifndef PART2_FILECACHEMANAGER_H
 #define PART2_FILECACHEMANAGER_H

@@ -1,6 +1,3 @@
-//
-// Created by yaara on 1/9/19.
-//
 
 #ifndef PART2_PARALLELSERVER_H
 #define PART2_PARALLELSERVER_H

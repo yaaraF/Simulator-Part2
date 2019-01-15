@@ -1,6 +1,3 @@
-//
-// Created by adi on 1/7/19.
-//
 
 #ifndef PART2_BFS_H
 #define PART2_BFS_H
@@ -24,9 +21,6 @@ public:
 
     virtual string search(Searchable<T> *searchable)
     {
-// Mark all the vertices as not visited
-
-        // searchable->InitlizeAllStates();
 
         list<State<T> *> queue;
         typename vector<State<T> *>::iterator it;
@@ -36,12 +30,6 @@ public:
         current->setIsVisted(true);
 
         queue.push_back(current);
-
-
-// 'i' will be used to get all adjacent
-// vertices of a vertex
-
-
         while (!queue.empty()) {
             // Dequeue a vertex from queue and print it
             current = queue.front();
@@ -51,7 +39,6 @@ public:
             if (current->Equals(endNode)) {
                 break;
             }
-            //cout << current << " ";
             this->nodeThetElevated++;
 
 
@@ -72,11 +59,6 @@ public:
             }
 
         }
-
-        cout<<"BFS"<<endl;
-        cout<<"node:"<<this->nodeThetElevated<<endl;
-
-
         vector<State<T> *> path = this->ThePath(searchable->getGoalState());
 
         string solution = searchable->WhereToGo(path);

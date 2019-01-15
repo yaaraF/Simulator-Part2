@@ -1,6 +1,3 @@
-//
-// Created by adi on 1/7/19.
-//
 
 #ifndef PART2_METRIXSEARCHABLE_H
 #define PART2_METRIXSEARCHABLE_H
@@ -17,14 +14,9 @@ class MetrixSearchable: public Searchable<T> {
 
 public:
     virtual ~MetrixSearchable() {
-//        delete(this->start);
-  //      delete(this->end);
-        for(int i=0;i<this->metrix.size();++i){
-            for(int j=0;j<this->metrix[i].size();++j){
-                delete(this->metrix[i][j]);
-            }
+        for (int i = 0; i < this->metrix.size(); ++i) {
+            this->metrix[i].clear();
         }
-        //delete(this->metrix);
     }
 
     virtual State <T>* getInitalState() {
@@ -129,32 +121,6 @@ public:
         went.pop_back();
         return went;
     }
-    /*virtual vector<string> WhereToGo(vector<State<T>*> path){
-        string ans;
-        vector<string> went;
-        for(int i = 0 ; i < path.size()-1; i ++){
-            State<T>* r = path[i];
-            State<T> *second = path[i+1];
-            vector<int> cor = r->getState();
-            vector<int> next = second->getState();
-            if(cor[0]>next[0]){
-                ans = "up";
-            }else if(cor[1] > next[1]){
-                ans = "left";
-            }else if(cor[1]<next[1]){
-                ans = "right";
-
-            }else{
-                ans = "down";
-
-            }
-            went.push_back(ans);
-            ans = " ";
-            went.push_back(ans);
-        }
-        went.pop_back();
-        return went;
-    }*/
 
     MetrixSearchable(const vector<vector<State<vector<int>> *>> &metrix, const State<T> &start, const State<T> &end,
                      const string &matrixStr) : metrix(metrix), start(start), end(end), matrixStr(matrixStr) {}

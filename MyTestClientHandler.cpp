@@ -1,6 +1,4 @@
-//
-// Created by yaara on 1/3/19.
-//
+
 
 #include <unistd.h>
 #include <strings.h>

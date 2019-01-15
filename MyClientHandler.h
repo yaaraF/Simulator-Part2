@@ -1,6 +1,3 @@
-//
-// Created by yaara on 1/8/19.
-//
 
 #ifndef PART2_MYCLIENTHANDLER_H
 #define PART2_MYCLIENTHANDLER_H
@@ -20,6 +17,8 @@ public:
     CacheManager<string,string> *cm;
   Solver<Searchable<vector<int>>*,string>* searcher;
   Searchable <vector<int>> *matrixSrc;
+    State<vector<int>> *myState;
+    vector<State<vector<int>>*> states;
 
 public:
     MyClientHandler(CacheManager<string, string> *cm, Solver<Searchable<vector<int>> *, string> *searcher);

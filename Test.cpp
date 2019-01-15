@@ -92,7 +92,7 @@ void Test::handlerClient(int clientId) {
 
 
 
-    Searchable<vector<int>>* mat = new MetrixSearchable<vector<int>>(this->metrix,this->start,this->exit,this->matrixStr);
+   this->searchable = new MetrixSearchable<vector<int>>(this->metrix,this->start,this->exit,this->matrixStr);
     /*Searcher<vector<int>> *Bfs = new BFS<vector<int>>();
     string sol;
     sol = Bfs->search(mat);*/
@@ -105,9 +105,9 @@ void Test::handlerClient(int clientId) {
     string sol;
     sol = Best->search(mat);*/
 
-   /* Searcher<vector<int>> *astar = new AStar<vector<int>>();
+    Searcher<vector<int>> *astar = new AStar<vector<int>>();
     string sol;
-    sol = astar->search(mat);*/
+    sol = astar->search(this->searchable);
 
 
 
@@ -151,8 +151,6 @@ void Test::addLineToMetrix(vector<string> line, int iCounter) {
 
 void Test::writeTheSolution(int id, const char* problem) {
     string solution = this->cm->getSolution(problem);
-    cout<<"hiii "<<endl;
-    cout<<solution<<endl;
    /* ssize_t n = write(id, solution.c_str(), 1024);
 
     if (n < 0) {
@@ -275,6 +273,10 @@ void Test::EmpiryTrail() {
 
 
 
+}
+
+Test::~Test() {
+ delete(this->searchable);
 }
 
 

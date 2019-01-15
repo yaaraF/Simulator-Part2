@@ -1,6 +1,3 @@
-//
-// Created by adi on 1/8/19.
-//
 
 #ifndef PART2_DFS_H
 #define PART2_DFS_H
@@ -15,7 +12,6 @@ class DFS:public Searcher<T> {
 public:
     virtual string search(Searchable<T> *searchable) {
         // Initially mark all verices as not visited
-        //vector<bool> visited(V, false);
         State<T>* goal = searchable->getGoalState();
         // Create a stack for DFS
         stack<State<T>*>stack;
@@ -63,11 +59,7 @@ public:
 
         }
 
-        cout<<"Dfs"<<endl;
-        cout<<"node:"<<this->nodeThetElevated<<endl;
-
         vector<State<T>*> path = this->ThePath(searchable->getGoalState());
-
         string solution =  searchable->WhereToGo(path);
         return solution;
     }

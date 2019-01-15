@@ -1,6 +1,3 @@
-//
-// Created by yaara on 1/3/19.
-//
 
 #ifndef PART2_CLIENTHANDLER_H
 #define PART2_CLIENTHANDLER_H
@@ -10,6 +7,8 @@ using namespace std;
 
 class ClientHandler{
 public:
+    virtual ~ClientHandler() = default;
+
     virtual void handlerClient(int clientId)=0;
 };
 

@@ -1,6 +1,4 @@
-//
-// Created by adi on 1/6/19.
-//
+
 
 #ifndef PART2_SEARCHER_H
 #define PART2_SEARCHER_H
@@ -12,7 +10,11 @@ using namespace std;
 
 template <class T>
 class Searcher{
+
+
 public:
+    virtual ~Searcher()= default;
+
     virtual string search(Searchable<T> *searchable) = 0;
    virtual int getNumberOfNodeElevatde() = 0;
 

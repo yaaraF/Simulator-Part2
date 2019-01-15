@@ -1,14 +1,9 @@
-//
-// Created by yaara on 1/9/19.
-//
 
 #include "MyParallelServer.h"
 #include <cstring>
 
 void MyParallelServer::open(int port, ClientHandler *cH) {
 
-    bool wasFirstClient=false;
-    cout << "in open" << endl;
     int sockfd, portno;
     struct sockaddr_in serv_addr;
 
@@ -19,7 +14,6 @@ void MyParallelServer::open(int port, ClientHandler *cH) {
         perror("ERROR opening socket");
         exit(1);
     }
-    /*this->passingData->sockfd = sockfd;*/
     this->passingData->clientHandler = cH;
     /* Initialize socket structure */
     bzero((char *) &serv_addr, sizeof(serv_addr));
@@ -30,7 +24,6 @@ void MyParallelServer::open(int port, ClientHandler *cH) {
     serv_addr.sin_port = htons(portno);
     /* Now bind the host address using bind() call.*/
     if (bind(sockfd, (struct sockaddr *) &serv_addr, sizeof(serv_addr)) < 0) {
-        cout << "error in bind" << endl;
         perror("ERROR on binding");
         exit(1);
     }
@@ -40,30 +33,22 @@ void MyParallelServer::open(int port, ClientHandler *cH) {
     clilen = sizeof(cli_addr);
 
     timeval timeout;
-    /*timeout.tv_sec =0;
-    timeout.tv_usec = 0;
-
-    setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout));*/
+    timeval timeoutCli;
 
     while (true) {
-       /* if(wasFirstClient) {
-            timeout.tv_sec = 30;
-        }*/
-        //setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *) &timeout, sizeof(timeout));
         // Accept actual connection from the client
         cliSock = accept(sockfd, (struct sockaddr *) &cli_addr, (socklen_t *) &clilen);
         timeout.tv_usec = 0;
-        timeout.tv_sec = 30;
-        setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout));
-        wasFirstClient=true;
+        timeout.tv_sec = 10;
+        setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *) &timeout, sizeof(timeout));
         this->passingData->sockfd = cliSock;
-        if (cliSock< 0)	{
-            if (errno == EWOULDBLOCK)	{
+        if (cliSock < 0) {
+            if (errno == EWOULDBLOCK) {
                 cout << "timeout!" << endl;
                 stop();
                 break;
 
-            }	else	{
+            } else {
                 perror("other error");
                 stop();
                 break;
@@ -73,7 +58,9 @@ void MyParallelServer::open(int port, ClientHandler *cH) {
         if (pthread_create(&pthread, nullptr, MyParallelServer::threadManager, passingData) != 0) {
             perror("thread failed");
         }
-        cout << "thread success" << endl;
+        timeoutCli.tv_usec = 0;
+        timeoutCli.tv_sec = 0;
+        setsockopt(cliSock, SOL_SOCKET, SO_RCVTIMEO, (char *) &timeoutCli, sizeof(timeoutCli));
         this->threads.push_back(pthread);
     }
 
@@ -86,18 +73,15 @@ void *MyParallelServer::threadManager(void *data) {
 }
 
 void MyParallelServer::stop() {
-    cout<<"in stop"<<endl;
     for (unsigned long thread : this->threads) {
-        cout<<"i did join"<<endl;
         pthread_join(thread, nullptr);
     }
-    //close(sockfd);
 }
 
 MyParallelServer::~MyParallelServer() {
     close(this->sockfd);
-    delete(this->passingData->clientHandler);
-    delete(this->passingData);
+    delete (this->passingData);
+    this->threads.clear();
 }
 
 

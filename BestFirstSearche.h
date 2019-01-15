@@ -1,6 +1,3 @@
-//
-// Created by adi on 1/8/19.
-//
 
 #ifndef PART2_BESTFIRSTSERACHE_H
 #define PART2_BESTFIRSTSERACHE_H
@@ -60,11 +57,6 @@ public:
         }
 
         vector<State<T>*> path = this->ThePath(searchable->getGoalState());
-
-        cout<<"best"<<endl;
-        cout<<"node:"<<this->evluetedNode<<endl;
-        cout<<goal->getPathCost()<<endl;
-
         string solution = searchable->WhereToGo(path);
         return solution;
     }

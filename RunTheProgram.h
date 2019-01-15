@@ -1,6 +1,3 @@
-//
-// Created by adi on 1/15/19.
-//
 
 #ifndef PART2_RUNTHEPROGRAM_H
 #define PART2_RUNTHEPROGRAM_H

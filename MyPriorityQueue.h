@@ -1,6 +1,3 @@
-//
-// Created by adi on 1/8/19.
-//
 
 #ifndef PART2_MYPRIORITYQUEUE_H
 #define PART2_MYPRIORITYQUEUE_H

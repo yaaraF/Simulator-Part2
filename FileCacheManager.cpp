@@ -1,6 +1,3 @@
-//
-// Created by yaara on 1/3/19.
-//
 
 #include "FileCacheManager.h"
 
@@ -14,15 +11,7 @@ FileCacheManager<P, S>::FileCacheManager() {
 template<class P, class S>
 void FileCacheManager<P, S>::openF() {
     loadFileTable();
-   /* fstream table;
-    table.open(FILE_NAME, fstream::in | fstream::out | fstream::app);
-    if (!table) {
-        throw "Failed in opening file";
-    }
-    if (table.good()) {
-        loadFileTable(table);
-       table.close();
-    }*/
+
 }
 
 template<class P, class S>
@@ -38,7 +27,6 @@ S FileCacheManager<P, S>::getSolution(P problem) {
 template<class P, class S>
 void FileCacheManager<P, S>::saveSolution(P problem, S solution) {
     ofstream table(FILE_NAME, ios::app);
-    // TODO each problem and solution need toString!!
     table << problem << "$$$";
     table << solution << endl;
     table.close();

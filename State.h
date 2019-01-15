@@ -21,7 +21,7 @@ class State {
 public:
     virtual ~State() {
         //delete(this->state);
-        if(this->cameFrom!= nullptr) {
+        if(this->cameFrom!= NULL) {
             delete (this->cameFrom);
         }
     }

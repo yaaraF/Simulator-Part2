@@ -1,6 +1,3 @@
-//
-// Created by yaara on 1/3/19.
-//
 
 #ifndef PART2_MYSERIALSERVER_H
 #define PART2_MYSERIALSERVER_H
