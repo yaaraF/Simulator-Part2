@@ -16,6 +16,17 @@ class MetrixSearchable: public Searchable<T> {
     string matrixStr;
 
 public:
+    virtual ~MetrixSearchable() {
+//        delete(this->start);
+  //      delete(this->end);
+        for(int i=0;i<this->metrix.size();++i){
+            for(int j=0;j<this->metrix[i].size();++j){
+                delete(this->metrix[i][j]);
+            }
+        }
+        //delete(this->metrix);
+    }
+
     virtual State <T>* getInitalState() {
        vector<int> temp = this->start.getState();
 

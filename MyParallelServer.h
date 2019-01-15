@@ -12,6 +12,7 @@
 #include "Server.h"
 #include "MyClientHandler.h"
 
+using namespace server_side;
 
     class MyParallelServer : public Server {
         struct dataPass *passingData = new dataPass();

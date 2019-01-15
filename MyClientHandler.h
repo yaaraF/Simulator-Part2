@@ -13,11 +13,13 @@
 #include "MetrixSearchable.h"
 #include "BFS.h"
 
+
 class MyClientHandler: public ClientHandler {
 public:
 
     CacheManager<string,string> *cm;
   Solver<Searchable<vector<int>>*,string>* searcher;
+  Searchable <vector<int>> *matrixSrc;
 
 public:
     MyClientHandler(CacheManager<string, string> *cm, Solver<Searchable<vector<int>> *, string> *searcher);
@@ -27,6 +29,8 @@ public:
     vector<string> split(string line);
     void createMatrix(vector<vector<string>> lines, vector<vector<State<vector<int>> *>> &matrix);
     void writeTheSolution(int id,const char* problem);
+
+    virtual ~MyClientHandler();
 };
 
 

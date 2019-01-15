@@ -19,7 +19,12 @@ class State {
     bool isVisted;
     double PathCost;
 public:
-
+    virtual ~State() {
+        //delete(this->state);
+        if(this->cameFrom!= nullptr) {
+            delete (this->cameFrom);
+        }
+    }
 //    State(T state, double cost, const State<T> &cameFrom, bool isVisted) : state(state), cost(cost), cameFrom(cameFrom),
 //                                                                           isVisted(isVisted) {}
 

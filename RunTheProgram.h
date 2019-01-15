@@ -17,6 +17,10 @@ using namespace std;
 
 class RunTheProgram {
     Server* par;
+    CacheManager<string,string> *cacheManager;
+    Searcher<vector<int>>* searcher;
+    Solver<Searchable<vector<int>>*,string>* solver;
+    ClientHandler *clientHandler;
 public:
     void run(string s);
 

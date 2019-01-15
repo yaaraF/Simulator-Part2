@@ -7,6 +7,7 @@
 
 void MyParallelServer::open(int port, ClientHandler *cH) {
 
+    bool wasFirstClient=false;
     cout << "in open" << endl;
     int sockfd, portno;
     struct sockaddr_in serv_addr;
@@ -39,15 +40,22 @@ void MyParallelServer::open(int port, ClientHandler *cH) {
     clilen = sizeof(cli_addr);
 
     timeval timeout;
-    timeout.tv_sec = 30;
+    /*timeout.tv_sec =0;
     timeout.tv_usec = 0;
 
-    setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout));
+    setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout));*/
 
     while (true) {
+       /* if(wasFirstClient) {
+            timeout.tv_sec = 30;
+        }*/
         //setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *) &timeout, sizeof(timeout));
         // Accept actual connection from the client
         cliSock = accept(sockfd, (struct sockaddr *) &cli_addr, (socklen_t *) &clilen);
+        timeout.tv_usec = 0;
+        timeout.tv_sec = 30;
+        setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (char *)&timeout, sizeof(timeout));
+        wasFirstClient=true;
         this->passingData->sockfd = cliSock;
         if (cliSock< 0)	{
             if (errno == EWOULDBLOCK)	{
@@ -83,11 +91,12 @@ void MyParallelServer::stop() {
         cout<<"i did join"<<endl;
         pthread_join(thread, nullptr);
     }
-    close(sockfd);
-
+    //close(sockfd);
 }
 
 MyParallelServer::~MyParallelServer() {
+    close(this->sockfd);
+    delete(this->passingData->clientHandler);
     delete(this->passingData);
 }
 

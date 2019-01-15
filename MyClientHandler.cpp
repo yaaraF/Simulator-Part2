@@ -70,9 +70,12 @@ void MyClientHandler::handlerClient(int clientId) {
     cout<<"i put mutex"<<endl;
     if (!cm->isProblemExist(matrixStr)) {
         cout<<"$ 10"<<endl;
-        string solution = searcher->solve(new MetrixSearchable<vector<int>>(matrix, start,exit, matrixStr));
+        this->matrixSrc=new MetrixSearchable<vector<int>>(matrix, start,exit, matrixStr);
+        string solution = searcher->solve(this->matrixSrc);
         cm->saveSolution(matrixStr, solution);
         cout<<"my solution: "<<solution<<endl;
+    }else{
+        cout<<"i take it from map"<<endl;
     }
     writeTheSolution(clientId, matrixStr.c_str());
     mutex1.unlock();
@@ -132,4 +135,11 @@ void MyClientHandler::createMatrix(vector<vector<string>> lines, vector<vector<S
 MyClientHandler::MyClientHandler(CacheManager<string, string> *cm, Solver<Searchable<vector<int>> *, string> *searcher){
     this->cm = cm;
     this->searcher = searcher;
+}
+
+MyClientHandler::~MyClientHandler() {
+    delete (this->matrixSrc);
+    delete(this->cm);
+    delete(this->searcher);
+
 }

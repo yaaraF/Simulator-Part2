@@ -20,6 +20,10 @@ public:
     string solve(Searchable<vector<int>>* searchable) override {
       return this->searcher->search(searchable);
     }
+
+    virtual ~SercherSolver() {
+        delete (this->searcher);
+    }
 };
 
 #endif //PART2_SEARCHERSOLVER_H

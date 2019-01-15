@@ -15,6 +15,14 @@ template <class T>
 class AStar:public Searcher<T>{
     int nodeThatEleveted = 0 ;
     vector<State<T>*> open1;
+public:
+    virtual ~AStar() {
+        for(int i = 0; i < this->open1.size();i++) {
+            delete (this->open1[i]);
+        }
+    }
+
+private:
     virtual int getNumberOfNodeElevatde(){
         return this->nodeThatEleveted;
     }
