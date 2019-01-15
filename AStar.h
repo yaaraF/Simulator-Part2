@@ -83,13 +83,16 @@ private:
             }
 
         }
-        cout<<"Astar"<<endl;
-        cout<<"node:"<<this->nodeThatEleveted<<endl;
-        cout<<goal->getPathCost()<<endl;
+        string solution;
+        if(goal->getCameFrom() == NULL){
+            solution = "-1";
 
-        vector<State<T>*> path = this->ThePath(searchable->getGoalState());
+       }else{
+            vector<State<T>*> path = this->ThePath(searchable->getGoalState());
+            solution =  searchable->WhereToGo(path);
+        }
 
-        string solution =  searchable->WhereToGo(path);
+
         return solution;
 
 
