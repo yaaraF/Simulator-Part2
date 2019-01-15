@@ -13,8 +13,7 @@ using namespace std;
 
 void MyClientHandler::handlerClient(int clientId) {
     cout<<"in handler client"<<endl;
-    this->cm=new FileCacheManager<string,string>();
-    this->searcher=new BFS<vector<int>>();
+
     ssize_t n;
     string matrixStr;
     vector<vector<State<vector<int>>*>> matrix;
@@ -71,8 +70,7 @@ void MyClientHandler::handlerClient(int clientId) {
     cout<<"i put mutex"<<endl;
     if (!cm->isProblemExist(matrixStr)) {
         cout<<"$ 10"<<endl;
-        string solution = searcher->search(
-                new MetrixSearchable<vector<int>>(matrix, start,exit, matrixStr));
+        string solution = searcher->solve(new MetrixSearchable<vector<int>>(matrix, start,exit, matrixStr));
         cm->saveSolution(matrixStr, solution);
         cout<<"my solution: "<<solution<<endl;
     }
@@ -129,4 +127,9 @@ void MyClientHandler::createMatrix(vector<vector<string>> lines, vector<vector<S
         vecLine.clear();
     }
 
+}
+
+MyClientHandler::MyClientHandler(CacheManager<string, string> *cm, Solver<Searchable<vector<int>> *, string> *searcher){
+    this->cm = cm;
+    this->searcher = searcher;
 }

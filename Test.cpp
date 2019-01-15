@@ -187,14 +187,14 @@ void Test::checkRQ() {
 }
 
 void Test::testParllel() {
-    Server *testServer=new MyParallelServer();
+    /*Server *testServer=new MyParallelServer();
     CacheManager<string,string> *cacheManager=new FileCacheManager<string,string>();
     Solver <string,string> *rev=new stringReverser();
     ClientHandler *clientHandler=new MyClientHandler();
     testServer->open(5400,clientHandler);
     cout<<"enterToContinue"<<endl;
     cin.ignore();
-    testServer->stop();
+    testServer->stop();*/
 
 }
 

@@ -27,6 +27,7 @@
 
         static void* threadManager (void* data);
 
+        virtual ~MyParallelServer();
 
 
     };

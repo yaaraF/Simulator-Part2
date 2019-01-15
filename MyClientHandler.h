@@ -15,14 +15,14 @@
 
 class MyClientHandler: public ClientHandler {
 public:
-    //Solver<string,string> *solver;
+
     CacheManager<string,string> *cm;
-   Searcher<vector<int>> * searcher;
-   /* vector<vector<State<vector<int>>*>> matrix;
-    State<vector<int>> start;
-    State<vector<int>> exit;*/
+  Solver<Searchable<vector<int>>*,string>* searcher;
 
 public:
+    MyClientHandler(CacheManager<string, string> *cm, Solver<Searchable<vector<int>> *, string> *searcher);
+
+
     void handlerClient(int clientId);
     vector<string> split(string line);
     void createMatrix(vector<vector<string>> lines, vector<vector<State<vector<int>> *>> &matrix);

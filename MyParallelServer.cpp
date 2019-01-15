@@ -87,6 +87,10 @@ void MyParallelServer::stop() {
 
 }
 
+MyParallelServer::~MyParallelServer() {
+    delete(this->passingData);
+}
+
 
 
 
